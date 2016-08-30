@@ -1,0 +1,81 @@
+baseurl = "http://tegola.io/"
+languageCode = "en-us"
+title = "Tegola - An MVT vector tile server"
+theme = "hugo-material-docs"
+metadataformat = "yaml"
+canonifyurls = true
+# Enable Google Analytics by entering your tracking id
+googleAnalytics = ""
+
+[params]
+	# General information
+	author = ""
+	description = "An MVT vector tile server"
+	copyright = ""
+
+	# Repository
+	provider = "GitHub"
+	repo_url = "https://github.com/terranodo/tegola"
+	version = "0.2.0"
+
+	logo = "images/logo.png"
+	favicon = ""
+
+	permalink = "#"
+
+	# Custom assets
+	custom_css = []
+	custom_js  = []
+
+	# Syntax highlighting theme
+	highlight_css  = ""
+
+	[params.palette]
+    	primary = "indigo"
+    	accent  = "teal"
+
+    [params.font]
+    	text = "Ubuntu"
+    	code = "Ubuntu Mono"
+
+[social]
+	twitter = ""
+	github  = "terranodo"
+
+# main menu
+[[menu.main]]
+	name   = "Overview"
+	url    = "/"
+	weight = 0
+
+[[menu.main]]
+	name   = "Getting started"
+	url    = "getting-started/"
+	weight = 10
+
+[[menu.main]]
+	name   = "Examples"
+	url    = "examples/"
+	weight = 20
+
+[[menu.main]]
+	name   = "Configuration"
+	url    = "configuration/"
+	weight = 30
+
+[[menu.main]]
+	name   = "Data providers"
+	url    = "data-providers/"
+	weight = 40
+
+[[menu.main]]
+	name   = "Debugging"
+	url    = "debugging/"
+	weight = 50	
+
+
+[blackfriday]
+	smartypants	= true
+	fractions = true
+	smartDashes = true
+	plainIDAnchors = true
