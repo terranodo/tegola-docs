@@ -63,11 +63,11 @@ Create a new file, copy in the contents below, and open in a browser:
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mapbox Vector Tiles</title>
+    <title>Tegola Sample</title>
     <link rel="stylesheet" href="http://openlayers.org/en/v3.16.0/css/ol.css" type="text/css">
     <script src="http://openlayers.org/en/v3.16.0/build/ol.js"></script>
     <style>
-      .map {
+      #map {
         width: 100%;
         height: 100%;
         position: absolute;
@@ -76,28 +76,28 @@ Create a new file, copy in the contents below, and open in a browser:
     </style>
   </head>
   <body>
-    <div id="map" class="map"></div>
-      <script>
-        var map = new ol.Map({
-          layers: [
-            new ol.layer.VectorTile({
-              source: new ol.source.VectorTile({
-                attributions: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
-                '© <a href="http://www.openstreetmap.org/copyright">' +
-                'OpenStreetMap contributors</a>',
-                format: new ol.format.MVT(),
-                tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
-                tilePixelRatio: 16,
-                url:'/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true'
-              })
+    <div id="map"></div>
+    <script>
+      var map = new ol.Map({
+        layers: [
+          new ol.layer.VectorTile({
+            source: new ol.source.VectorTile({
+              attributions: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
+              '© <a href="http://www.openstreetmap.org/copyright">' +
+              'OpenStreetMap contributors</a>',
+              format: new ol.format.MVT(),
+              tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
+              tilePixelRatio: 16,
+              url:'/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true'
             })
-          ],
-          target: 'map',
-          view: new ol.View({
-            center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
-            zoom: 14
           })
-        });
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
+          zoom: 14
+        })
+      });
     </script>
   </body>
 </html>

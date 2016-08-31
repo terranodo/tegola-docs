@@ -19,7 +19,7 @@
 
 &lt;p&gt;Tegola is a high performance Mapbox Vector Tile server written in &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt;. In a nutshell, Tegola takes geospatial data and slices it into vector tiles that can be efficiently delivered to any client. Tegola is serving the vector tiles in the following map:&lt;/p&gt;
 
-&lt;iframe src=&#34;http://localhost:8080/bonn/&#34; style=&#34;margin-top:20px;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
+&lt;iframe src=&#34;http://tegola.cfapps.io/&#34; style=&#34;margin-top:20px;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
 
 
 
@@ -103,11 +103,11 @@ srid = 3857             # The default srid for this provider. If not provided it
 &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html&amp;gt;
   &amp;lt;head&amp;gt;
-    &amp;lt;title&amp;gt;Mapbox Vector Tiles&amp;lt;/title&amp;gt;
+    &amp;lt;title&amp;gt;Tegola Sample&amp;lt;/title&amp;gt;
     &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;http://openlayers.org/en/v3.16.0/css/ol.css&amp;quot; type=&amp;quot;text/css&amp;quot;&amp;gt;
     &amp;lt;script src=&amp;quot;http://openlayers.org/en/v3.16.0/build/ol.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
     &amp;lt;style&amp;gt;
-      .map {
+      #map {
         width: 100%;
         height: 100%;
         position: absolute;
@@ -116,28 +116,28 @@ srid = 3857             # The default srid for this provider. If not provided it
     &amp;lt;/style&amp;gt;
   &amp;lt;/head&amp;gt;
   &amp;lt;body&amp;gt;
-    &amp;lt;div id=&amp;quot;map&amp;quot; class=&amp;quot;map&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
-      &amp;lt;script&amp;gt;
-        var map = new ol.Map({
-          layers: [
-            new ol.layer.VectorTile({
-              source: new ol.source.VectorTile({
-                attributions: &#39;© &amp;lt;a href=&amp;quot;https://www.mapbox.com/map-feedback/&amp;quot;&amp;gt;Mapbox&amp;lt;/a&amp;gt; &#39; +
-                &#39;© &amp;lt;a href=&amp;quot;http://www.openstreetmap.org/copyright&amp;quot;&amp;gt;&#39; +
-                &#39;OpenStreetMap contributors&amp;lt;/a&amp;gt;&#39;,
-                format: new ol.format.MVT(),
-                tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
-                tilePixelRatio: 16,
-                url:&#39;/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true&#39;
-              })
+    &amp;lt;div id=&amp;quot;map&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+    &amp;lt;script&amp;gt;
+      var map = new ol.Map({
+        layers: [
+          new ol.layer.VectorTile({
+            source: new ol.source.VectorTile({
+              attributions: &#39;© &amp;lt;a href=&amp;quot;https://www.mapbox.com/map-feedback/&amp;quot;&amp;gt;Mapbox&amp;lt;/a&amp;gt; &#39; +
+              &#39;© &amp;lt;a href=&amp;quot;http://www.openstreetmap.org/copyright&amp;quot;&amp;gt;&#39; +
+              &#39;OpenStreetMap contributors&amp;lt;/a&amp;gt;&#39;,
+              format: new ol.format.MVT(),
+              tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
+              tilePixelRatio: 16,
+              url:&#39;/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true&#39;
             })
-          ],
-          target: &#39;map&#39;,
-          view: new ol.View({
-            center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
-            zoom: 14
           })
-        });
+        ],
+        target: &#39;map&#39;,
+        view: new ol.View({
+          center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
+          zoom: 14
+        })
+      });
     &amp;lt;/script&amp;gt;
   &amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
