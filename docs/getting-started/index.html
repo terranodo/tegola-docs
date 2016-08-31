@@ -294,17 +294,17 @@
 
 <h2 id="2-get-a-data-provider">2. Get a data provider</h2>
 
-<p>Tegola needs geospatial data to run. Currently, the only supported data format is PostGIS which is a format on top of PostgreSQL. If you do not have it installed, <a href="http://postgis.net/install/">download PostGIS</a></p>
+<p>Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL. If you don&rsquo;t have PostGIS installed, <a href="http://postgis.net/install/">download PostGIS</a>.</p>
 
-<p>Next, you&rsquo;ll need a source of data. For your convenience we&rsquo;ve provided sample PostGIS data of <a href="https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz">Bonn, Germany</a>.</p>
+<p>Next, you&rsquo;ll need to load your data provider with data. For your convenience you can download <a href="https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz">PostGIS data for Bonn, Germany</a>.</p>
 
-<p>You&rsquo;ll need to create a new database (named &ldquo;bonn&rdquo;) and use a restore command to import the unzipped sql file into the database. Documentation can be found <a href="https://www.postgresql.org/docs/8.1/static/backup.html">here</a> under the section titled &ldquo;Restoring the dump&rdquo;. The command should look something like <code>psql bonn &lt; bonn_osm.sql</code>.</p>
+<p>You&rsquo;ll need to create a new database (named &ldquo;bonn&rdquo;) and use a restore command to import the unzipped sql file into the database. Documentation can be found <a href="https://www.postgresql.org/docs/current/static/backup.html">here</a> under the section titled &ldquo;Restoring the dump&rdquo;. The command should look something like <code>psql bonn &lt; bonn_osm.sql</code>.</p>
 
 <h2 id="3-create-a-configuration-file">3. Create a configuration file</h2>
 
-<p>Tegola utilizes a single configuration file to control it&rsquo;s actions and coordinate with data source(s). This configuration file is written in TOML format. If you&rsquo;re unfamiliar with TOML, you can find documentation <a href="https://github.com/toml-lang/toml">here</a>.</p>
+<p>Tegola utilizes a single configuration file to coordinate with data provider(s). This configuration file is written in <a href="https://github.com/toml-lang/toml">TOML format</a>.</p>
 
-<p>Create your configuration file in the same directory as the Tegola binary and name it <code>config.toml</code>. Next, copy and paste the following into this configuration file:</p>
+<p>Create your configuration file in the same directory as the Tegola binary and name it <code>config.toml</code>. Next, copy and paste the following into this file:</p>
 
 <pre><code class="language-toml">[webserver]
 port = &quot;:8080&quot;
@@ -357,7 +357,7 @@ name = &quot;zoning&quot;
   max_zoom = 20
 </code></pre>
 
-<p>Note that this configuration file is specific to the Bonn data and if using other data, will need to be configured based on the data being used.</p>
+<p>Note: This configuration file is specific to the Bonn data provided in step 2. If you&rsquo;re using another dataset reference the <a href="http://tegola.io/configuration">Configuration Documentation</a>.</p>
 
 <h2 id="4-start-tegola">4. Start Tegola</h2>
 
@@ -372,7 +372,7 @@ name = &quot;zoning&quot;
 
 <p>Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&rsquo;ll be using the <a href="http://openlayers.org/">Open Layers</a> client side library to display and style the vector tile content.</p>
 
-<p>Create a new file, copy in the contents below, and open in a browser:</p>
+<p>Create a new HTML file, copy in the contents below, and open in a browser:</p>
 
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -418,6 +418,8 @@ name = &quot;zoning&quot;
 </code></pre>
 
 <p>If everything was successful, you should see a map of Bonn in your browser.</p>
+
+<p><img src="http://tegola.io/images/bonn.png" alt="Bonn, Germany" /></p>
 
 
 			<aside class="copyright" role="note">
