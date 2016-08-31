@@ -28,7 +28,6 @@ Tegola utilizes a single configuration file to control it's actions and coordina
 Create your configuration file with any text editor and name it `config.toml`. Next, copy and paste the following into this configuration file:
 
 ```toml
-
 [webserver]
 port = ":9090"
 
@@ -42,7 +41,6 @@ database = "tegola"     # postgis database name
 user = "tegola"         # postgis database user
 password = ""           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
-
 ```
 
 ## 4. Create an HTML page

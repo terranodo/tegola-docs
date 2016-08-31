@@ -19,7 +19,7 @@
 
 &lt;p&gt;Tegola is a high performance Mapbox Vector Tile server written in &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt;. In a nutshell, Tegola takes geospatial vector data and slices it into vector tiles that can be styled on the client. For example, Tegola is responsible for generating all the map tiles in the following map:&lt;/p&gt;
 
-&lt;iframe src=&#34;http://localhost:8080/bonn/&#34; style=&#34;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
+&lt;iframe src=&#34;http://localhost:8080/bonn/&#34; style=&#34;margin-top:20px;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
 
 
 
@@ -68,8 +68,7 @@
 
 &lt;p&gt;Create your configuration file with any text editor and name it &lt;code&gt;config.toml&lt;/code&gt;. Next, copy and paste the following into this configuration file:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;
-[webserver]
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[webserver]
 port = &amp;quot;:9090&amp;quot;
 
 # register data providers
@@ -82,7 +81,6 @@ database = &amp;quot;tegola&amp;quot;     # postgis database name
 user = &amp;quot;tegola&amp;quot;         # postgis database user
 password = &amp;quot;&amp;quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
-
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;4-create-an-html-page&#34;&gt;4. Create an HTML page&lt;/h2&gt;

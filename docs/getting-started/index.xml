@@ -43,8 +43,7 @@
 
 &lt;p&gt;Create your configuration file with any text editor and name it &lt;code&gt;config.toml&lt;/code&gt;. Next, copy and paste the following into this configuration file:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;
-[webserver]
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[webserver]
 port = &amp;quot;:9090&amp;quot;
 
 # register data providers
@@ -57,7 +56,6 @@ database = &amp;quot;tegola&amp;quot;     # postgis database name
 user = &amp;quot;tegola&amp;quot;         # postgis database user
 password = &amp;quot;&amp;quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
-
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;4-create-an-html-page&#34;&gt;4. Create an HTML page&lt;/h2&gt;
