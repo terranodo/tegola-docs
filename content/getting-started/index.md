@@ -19,7 +19,7 @@ Find the Tegola file that was downloaded and move it into a fresh directory.
 
 Tegola needs geospatial data to run. Currently, the only supported data format is PostGIS which is a format on top of PostgreSQL. If you do not have it installed, [download PostGIS](http://postgis.net/install/)
 
-Next, you'll need a source of data. For your convenience we've provided a download of sample PostGIS data [here](www.link.com).
+Next, you'll need a source of data. For your convenience we've provided sample PostGIS data of [Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz).
 
 ## 3. Create a configuration file
 
@@ -37,11 +37,49 @@ name = "bonn"           # provider name is referenced from map layers
 type = "postgis"        # the type of data provider. currently only supports postgis
 host = "localhost"      # postgis database host
 port = 5432             # postgis database port
-database = "tegola"     # postgis database name
+database = "bonn"       # postgis database name
 user = "tegola"         # postgis database user
 password = ""           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+
+[[providers.layers]]
+  name = "road"
+  geometry_fieldname = "wkb_geometry"
+  id_fieldname = "ogc_fid"
+  sql = "SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM all_roads_3857 WHERE wkb_geometry && !BBOX!"
+
+  [[providers.layers]]
+  name = "main_roads"
+  geometry_fieldname = "wkb_geometry"
+  id_fieldname = "ogc_fid"
+  sql = "SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM main_roads_3857 WHERE wkb_geometry && !BBOX!"
+
+  [[providers.layers]]
+  name = "lakes"
+  geometry_fieldname = "wkb_geometry"
+  id_fieldname = "ogc_fid"
+  sql = "SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM lakes_3857 WHERE wkb_geometry && !BBOX!"
+
+[[maps]]
+name = "zoning"
+
+  [[maps.layers]]
+  provider_layer = "bonn.road"
+  min_zoom = 10
+  max_zoom = 20
+
+  [[maps.layers]]
+  provider_layer = "bonn.main_roads"
+  min_zoom = 5
+  max_zoom = 20
+
+  [[maps.layers]]
+  provider_layer = "bonn.lakes"
+  min_zoom = 5
+  max_zoom = 20
 ```
+
+Note that this configuration file is specific to the Bonn data and if using other data, will need to be configured based on the data being used.
 
 ## 4. Start Tegola
 

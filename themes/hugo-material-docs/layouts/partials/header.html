@@ -19,7 +19,7 @@
 
     {{ with .Site.Social.github }}
     <div class="button button-github" role="button" aria-label="GitHub">
-      <a href="https://github.com/{{ . }}" title="@{{ . }} on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+      <a href="{{$.Site.Params.repo_url}}" title="{{$.Site.Title}}" target="_blank" class="toggle-button icon icon-github"></a>
     </div>
     {{ end }}
     
