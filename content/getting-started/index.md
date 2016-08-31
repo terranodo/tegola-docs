@@ -17,17 +17,17 @@ Find the Tegola file that was downloaded and move it into a fresh directory.
 
 ## 2. Get a data provider
 
-Tegola needs geospatial data to run. Currently, the only supported data format is PostGIS which is a format on top of PostgreSQL. If you do not have it installed, [download PostGIS](http://postgis.net/install/)
+Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL. If you don't have PostGIS installed, [download PostGIS](http://postgis.net/install/).
 
-Next, you'll need a source of data. For your convenience we've provided sample PostGIS data of [Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz).
+Next, you'll need to load your data provider with data. For your convenience you can download [PostGIS data for Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz).
 
-You'll need to create a new database (named "bonn") and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/8.1/static/backup.html) under the section titled "Restoring the dump". The command should look something like `psql bonn < bonn_osm.sql`.
+You'll need to create a new database (named "bonn") and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/current/static/backup.html) under the section titled "Restoring the dump". The command should look something like `psql bonn < bonn_osm.sql`.
 
 ## 3. Create a configuration file
 
-Tegola utilizes a single configuration file to control it's actions and coordinate with data source(s). This configuration file is written in TOML format. If you're unfamiliar with TOML, you can find documentation [here](https://github.com/toml-lang/toml).
+Tegola utilizes a single configuration file to coordinate with data provider(s). This configuration file is written in [TOML format](https://github.com/toml-lang/toml).
 
-Create your configuration file in the same directory as the Tegola binary and name it `config.toml`. Next, copy and paste the following into this configuration file:
+Create your configuration file in the same directory as the Tegola binary and name it `config.toml`. Next, copy and paste the following into this file:
 
 ```toml
 [webserver]
@@ -81,7 +81,7 @@ name = "zoning"
   max_zoom = 20
 ```
 
-Note that this configuration file is specific to the Bonn data and if using other data, will need to be configured based on the data being used.
+Note: This configuration file is specific to the Bonn data provided in step 2. If you're using another dataset reference the [Configuration Documentation](/configuration).
 
 ## 4. Start Tegola
 
@@ -97,7 +97,7 @@ You should see a message confirming the config file load and Tegola being starte
 
 Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we'll be setting up a basic HTML page as our client that will display the rendered map. We'll be using the [Open Layers](http://openlayers.org/) client side library to display and style the vector tile content.
 
-Create a new file, copy in the contents below, and open in a browser:
+Create a new HTML file, copy in the contents below, and open in a browser:
 
 ```html
 <!DOCTYPE html>
