@@ -35,7 +35,7 @@
 
 &lt;p&gt;Tegola needs geospatial data to run. Currently, the only supported data format is PostGIS which is a format on top of PostgreSQL. If you do not have it installed, &lt;a href=&#34;http://postgis.net/install/&#34;&gt;download PostGIS&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Next, you&amp;rsquo;ll need a source of data. For your convenience we&amp;rsquo;ve provided a download of sample PostGIS data &lt;a href=&#34;www.link.com&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Next, you&amp;rsquo;ll need a source of data. For your convenience we&amp;rsquo;ve provided sample PostGIS data of &lt;a href=&#34;https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz&#34;&gt;Bonn, Germany&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;3-create-a-configuration-file&#34;&gt;3. Create a configuration file&lt;/h2&gt;
 
@@ -52,11 +52,49 @@ name = &amp;quot;bonn&amp;quot;           # provider name is referenced from map
 type = &amp;quot;postgis&amp;quot;        # the type of data provider. currently only supports postgis
 host = &amp;quot;localhost&amp;quot;      # postgis database host
 port = 5432             # postgis database port
-database = &amp;quot;tegola&amp;quot;     # postgis database name
+database = &amp;quot;bonn&amp;quot;       # postgis database name
 user = &amp;quot;tegola&amp;quot;         # postgis database user
 password = &amp;quot;&amp;quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+
+[[providers.layers]]
+  name = &amp;quot;road&amp;quot;
+  geometry_fieldname = &amp;quot;wkb_geometry&amp;quot;
+  id_fieldname = &amp;quot;ogc_fid&amp;quot;
+  sql = &amp;quot;SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM all_roads_3857 WHERE wkb_geometry &amp;amp;&amp;amp; !BBOX!&amp;quot;
+
+  [[providers.layers]]
+  name = &amp;quot;main_roads&amp;quot;
+  geometry_fieldname = &amp;quot;wkb_geometry&amp;quot;
+  id_fieldname = &amp;quot;ogc_fid&amp;quot;
+  sql = &amp;quot;SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM main_roads_3857 WHERE wkb_geometry &amp;amp;&amp;amp; !BBOX!&amp;quot;
+
+  [[providers.layers]]
+  name = &amp;quot;lakes&amp;quot;
+  geometry_fieldname = &amp;quot;wkb_geometry&amp;quot;
+  id_fieldname = &amp;quot;ogc_fid&amp;quot;
+  sql = &amp;quot;SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM lakes_3857 WHERE wkb_geometry &amp;amp;&amp;amp; !BBOX!&amp;quot;
+
+[[maps]]
+name = &amp;quot;zoning&amp;quot;
+
+  [[maps.layers]]
+  provider_layer = &amp;quot;bonn.road&amp;quot;
+  min_zoom = 10
+  max_zoom = 20
+
+  [[maps.layers]]
+  provider_layer = &amp;quot;bonn.main_roads&amp;quot;
+  min_zoom = 5
+  max_zoom = 20
+
+  [[maps.layers]]
+  provider_layer = &amp;quot;bonn.lakes&amp;quot;
+  min_zoom = 5
+  max_zoom = 20
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this configuration file is specific to the Bonn data and if using other data, will need to be configured based on the data being used.&lt;/p&gt;
 
 &lt;h2 id=&#34;4-start-tegola&#34;&gt;4. Start Tegola&lt;/h2&gt;
 
