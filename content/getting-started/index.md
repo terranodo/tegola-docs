@@ -144,3 +144,6 @@ Create a new HTML file, copy in the contents below, and open in a browser:
 ```
 
 If everything was successful, you should see a map of Bonn in your browser. 
+
+![Bonn, Germany](/images/bonn.png)
+
