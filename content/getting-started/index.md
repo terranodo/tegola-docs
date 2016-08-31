@@ -21,6 +21,8 @@ Tegola needs geospatial data to run. Currently, the only supported data format i
 
 Next, you'll need a source of data. For your convenience we've provided sample PostGIS data of [Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz).
 
+You'll need to create a new database (named "bonn") and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/8.1/static/backup.html) under the section titled "Restoring the dump". The command should look something like `psql bonn < bonn_osm.sql`.
+
 ## 3. Create a configuration file
 
 Tegola utilizes a single configuration file to control it's actions and coordinate with data source(s). This configuration file is written in TOML format. If you're unfamiliar with TOML, you can find documentation [here](https://github.com/toml-lang/toml).

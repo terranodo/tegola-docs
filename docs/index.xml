@@ -64,6 +64,8 @@
 
 &lt;p&gt;Next, you&amp;rsquo;ll need a source of data. For your convenience we&amp;rsquo;ve provided sample PostGIS data of &lt;a href=&#34;https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz&#34;&gt;Bonn, Germany&lt;/a&gt;.&lt;/p&gt;
 
+&lt;p&gt;You&amp;rsquo;ll need to create a new database (named &amp;ldquo;bonn&amp;rdquo;) and use a restore command to import the unzipped sql file into the database. Documentation can be found &lt;a href=&#34;https://www.postgresql.org/docs/8.1/static/backup.html&#34;&gt;here&lt;/a&gt; under the section titled &amp;ldquo;Restoring the dump&amp;rdquo;. The command should look something like &lt;code&gt;psql bonn &amp;lt; bonn_osm.sql&lt;/code&gt;.&lt;/p&gt;
+
 &lt;h2 id=&#34;3-create-a-configuration-file&#34;&gt;3. Create a configuration file&lt;/h2&gt;
 
 &lt;p&gt;Tegola utilizes a single configuration file to control it&amp;rsquo;s actions and coordinate with data source(s). This configuration file is written in TOML format. If you&amp;rsquo;re unfamiliar with TOML, you can find documentation &lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
