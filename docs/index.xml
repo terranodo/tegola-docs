@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tegola - A MVT vector tile server</title>
+    <title>Tegola - Vector tile server (MVT)</title>
     <link>http://tegola.io/</link>
-    <description>Recent content on Tegola - A MVT vector tile server</description>
+    <description>Recent content on Tegola - Vector tile server (MVT)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 30 Aug 2016 00:11:02 +0100</lastBuildDate>
@@ -17,7 +17,7 @@
       <guid>http://tegola.io/</guid>
       <description>
 
-&lt;p&gt;Tegola is a high performance Mapbox Vector Tile server written in &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt;. In a nutshell, Tegola takes geospatial vector data and slices it into vector tiles that can be styled on the client. For example, Tegola is responsible for generating all the map tiles in the following map:&lt;/p&gt;
+&lt;p&gt;Tegola is a high performance Mapbox Vector Tile server written in &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt;. In a nutshell, Tegola takes geospatial data and slices it into vector tiles that can be efficiently delivered to any client. Tegola is serving the vector tiles in the following map:&lt;/p&gt;
 
 &lt;iframe src=&#34;http://localhost:8080/bonn/&#34; style=&#34;margin-top:20px;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
 
@@ -28,8 +28,10 @@
 &lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Simple to setup. All you need is the Tegola binary and a config file.&lt;/li&gt;
-&lt;li&gt;Extensible. Tegola is designed to support multiple data providers. Currently supports PostGIS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Simple to setup.&lt;/strong&gt; All you need is the Tegola binary and a config file.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extensible.&lt;/strong&gt; Tegola is designed to support multiple data providers. Currently supports PostGIS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Open source.&lt;/strong&gt; Tegola is open to collaborators - and with an MIT license, it&amp;rsquo;s available for anyone to use!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High performance.&lt;/strong&gt; Using bleeding edge technology and algorithms, Tegola is fast and efficient.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
@@ -66,10 +68,10 @@
 
 &lt;p&gt;Tegola utilizes a single configuration file to control it&amp;rsquo;s actions and coordinate with data source(s). This configuration file is written in TOML format. If you&amp;rsquo;re unfamiliar with TOML, you can find documentation &lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Create your configuration file with any text editor and name it &lt;code&gt;config.toml&lt;/code&gt;. Next, copy and paste the following into this configuration file:&lt;/p&gt;
+&lt;p&gt;Create your configuration file in the same directory as the Tegola binary and name it &lt;code&gt;config.toml&lt;/code&gt;. Next, copy and paste the following into this configuration file:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[webserver]
-port = &amp;quot;:9090&amp;quot;
+port = &amp;quot;:8080&amp;quot;
 
 # register data providers
 [[providers]]
@@ -83,7 +85,16 @@ password = &amp;quot;&amp;quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;4-create-an-html-page&#34;&gt;4. Create an HTML page&lt;/h2&gt;
+&lt;h2 id=&#34;4-start-tegola&#34;&gt;4. Start Tegola&lt;/h2&gt;
+
+&lt;p&gt;Navigate to the Tegola directory in your computer&amp;rsquo;s terminal and run this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;./tegola --config=config.toml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should see a message confirming the config file load and Tegola being started on port 8080. If your computer&amp;rsquo;s port 8080 is being used by another process, change the port in the config file to an open port.&lt;/p&gt;
+
+&lt;h2 id=&#34;5-create-an-html-page&#34;&gt;5. Create an HTML page&lt;/h2&gt;
 
 &lt;p&gt;Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&amp;rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&amp;rsquo;ll be using the &lt;a href=&#34;http://openlayers.org/&#34;&gt;Open Layers&lt;/a&gt; client side library to display and style the vector tile content.&lt;/p&gt;
 

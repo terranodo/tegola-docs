@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Tegola - A MVT vector tile server</title>
+    <title>Tegola - Vector tile server (MVT)</title>
     <meta name="generator" content="Hugo 0.16" />
 
     
@@ -19,9 +19,9 @@
     
 
     <meta property="og:url" content="http://tegola.io/">
-    <meta property="og:title" content="Tegola - A MVT vector tile server">
+    <meta property="og:title" content="Tegola - Vector tile server (MVT)">
     <meta property="og:image" content="http://tegola.io/images/logo.png">
-    <meta name="apple-mobile-web-app-title" content="Tegola - A MVT vector tile server">
+    <meta name="apple-mobile-web-app-title" content="Tegola - Vector tile server (MVT)">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -67,8 +67,8 @@
     <script src="http://tegola.io/javascripts/modernizr.js"></script>
 
     
-    <link href="http://tegola.io/index.xml" rel="alternate" type="application/rss+xml" title="Tegola - A MVT vector tile server" />
-    <link href="http://tegola.io/index.xml" rel="feed" type="application/rss+xml" title="Tegola - A MVT vector tile server" />
+    <link href="http://tegola.io/index.xml" rel="alternate" type="application/rss+xml" title="Tegola - Vector tile server (MVT)" />
+    <link href="http://tegola.io/index.xml" rel="feed" type="application/rss+xml" title="Tegola - Vector tile server (MVT)" />
     
 
     
@@ -102,7 +102,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        Tegola - A MVT vector tile server
+        Tegola - Vector tile server (MVT)
       </div>
     </div>
 
@@ -143,7 +143,7 @@
         </div>
       
       <div class="name">
-        <strong>Tegola - A MVT vector tile server <span class="version">0.2.0</span></strong>
+        <strong>Tegola - Vector tile server (MVT) <span class="version">0.2.0</span></strong>
         
           <br>
           terranodo/tegola
@@ -157,7 +157,7 @@
       
         <ul class="repo">
           <li class="repo-download">
-            <a href="https://github.com/terranodo/tegola/archive/master.zip" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/terranodo/tegola/releases" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
@@ -282,7 +282,7 @@
 
 				
 
-<p>Tegola is a high performance Mapbox Vector Tile server written in <a href="https://golang.org">Go</a>. In a nutshell, Tegola takes geospatial vector data and slices it into vector tiles that can be styled on the client. For example, Tegola is responsible for generating all the map tiles in the following map:</p>
+<p>Tegola is a high performance Mapbox Vector Tile server written in <a href="https://golang.org">Go</a>. In a nutshell, Tegola takes geospatial data and slices it into vector tiles that can be efficiently delivered to any client. Tegola is serving the vector tiles in the following map:</p>
 
 <iframe src="http://localhost:8080/bonn/" style="margin-top:20px;width:100%;height:300px;"></iframe>
 
@@ -293,8 +293,10 @@
 <h2 id="features">Features</h2>
 
 <ul>
-<li>Simple to setup. All you need is the Tegola binary and a config file.</li>
-<li>Extensible. Tegola is designed to support multiple data providers. Currently supports PostGIS.</li>
+<li><strong>Simple to setup.</strong> All you need is the Tegola binary and a config file.</li>
+<li><strong>Extensible.</strong> Tegola is designed to support multiple data providers. Currently supports PostGIS.</li>
+<li><strong>Open source.</strong> Tegola is open to collaborators - and with an MIT license, it&rsquo;s available for anyone to use!</li>
+<li><strong>High performance.</strong> Using bleeding edge technology and algorithms, Tegola is fast and efficient.</li>
 </ul>
 
 			

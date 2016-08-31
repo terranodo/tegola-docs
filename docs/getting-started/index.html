@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Getting started - Tegola - A MVT vector tile server</title>
+    <title>Getting started - Tegola - Vector tile server (MVT)</title>
     <meta name="generator" content="Hugo 0.16" />
 
     
@@ -19,9 +19,9 @@
     
 
     <meta property="og:url" content="http://tegola.io/getting-started/">
-    <meta property="og:title" content="Tegola - A MVT vector tile server">
+    <meta property="og:title" content="Tegola - Vector tile server (MVT)">
     <meta property="og:image" content="http://tegola.io/images/logo.png">
-    <meta name="apple-mobile-web-app-title" content="Tegola - A MVT vector tile server">
+    <meta name="apple-mobile-web-app-title" content="Tegola - Vector tile server (MVT)">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -140,7 +140,7 @@
         </div>
       
       <div class="name">
-        <strong>Tegola - A MVT vector tile server <span class="version">0.2.0</span></strong>
+        <strong>Tegola - Vector tile server (MVT) <span class="version">0.2.0</span></strong>
         
           <br>
           terranodo/tegola
@@ -154,7 +154,7 @@
       
         <ul class="repo">
           <li class="repo-download">
-            <a href="https://github.com/terranodo/tegola/archive/master.zip" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/terranodo/tegola/releases" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
@@ -302,10 +302,10 @@
 
 <p>Tegola utilizes a single configuration file to control it&rsquo;s actions and coordinate with data source(s). This configuration file is written in TOML format. If you&rsquo;re unfamiliar with TOML, you can find documentation <a href="https://github.com/toml-lang/toml">here</a>.</p>
 
-<p>Create your configuration file with any text editor and name it <code>config.toml</code>. Next, copy and paste the following into this configuration file:</p>
+<p>Create your configuration file in the same directory as the Tegola binary and name it <code>config.toml</code>. Next, copy and paste the following into this configuration file:</p>
 
 <pre><code class="language-toml">[webserver]
-port = &quot;:9090&quot;
+port = &quot;:8080&quot;
 
 # register data providers
 [[providers]]
@@ -319,7 +319,16 @@ password = &quot;&quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 </code></pre>
 
-<h2 id="4-create-an-html-page">4. Create an HTML page</h2>
+<h2 id="4-start-tegola">4. Start Tegola</h2>
+
+<p>Navigate to the Tegola directory in your computer&rsquo;s terminal and run this command:</p>
+
+<pre><code class="language-sh">./tegola --config=config.toml
+</code></pre>
+
+<p>You should see a message confirming the config file load and Tegola being started on port 8080. If your computer&rsquo;s port 8080 is being used by another process, change the port in the config file to an open port.</p>
+
+<h2 id="5-create-an-html-page">5. Create an HTML page</h2>
 
 <p>Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&rsquo;ll be using the <a href="http://openlayers.org/">Open Layers</a> client side library to display and style the vector tile content.</p>
 
