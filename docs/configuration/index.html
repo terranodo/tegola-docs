@@ -280,7 +280,7 @@
 
 <h2 id="overview">Overview</h2>
 
-<p>To use Tegola, you only need two things: Tegola and a Tegola config file. The Tegola config file use <a href="https://github.com/toml-lang/toml">TOML</a> syntax and is comprised of three primary sections:</p>
+<p>The Tegola config file use <a href="https://github.com/toml-lang/toml">TOML</a> syntax and is comprised of three primary sections:</p>
 
 <ul>
 <li><a href="#webserver">Webserver</a>: webserver configuration.</li>
@@ -311,18 +311,27 @@
 </tr>
 
 <tr>
-<td>log-file</td>
+<td>log_file</td>
 <td align="center">No</td>
 <td align="center"></td>
 <td align="right">Location of a log file to write webserver logs to.</td>
 </tr>
+
+<tr>
+<td>log_format</td>
+<td align="center">No</td>
+<td align="center">{{.Time}}:{{.RequestIP}} —— Tile:{{.Z}}/{{.X}}/{{.Y}}</td>
+<td align="right">Log output format. The Default format can be rearranged as desired.</td>
+</tr>
 </tbody>
 </table>
 
-<p>Example config</p>
+<h4 id="example-webserver-config">Example Webserver config</h4>
 
 <pre><code class="language-toml">[webserver]
 port = &quot;:8080&quot;
+log_file = &quot;/var/log/tegola/tegola.log&quot;
+log_format = &quot;{{.Time}}:{{.RequestIP}} —— Tile:{{.Z}}/{{.X}}/{{.Y}}&quot;
 </code></pre>
 
 <h2 id="providers">Providers</h2>
@@ -345,7 +354,7 @@ port = &quot;:8080&quot;
 
 <tr>
 <td>type</td>
-<td align="right">The type of data provider.</td>
+<td align="right">The type of data provider. (i.e. &ldquo;postgis&rdquo;)</td>
 </tr>
 </tbody>
 </table>
@@ -409,11 +418,11 @@ port = &quot;:8080&quot;
 </tbody>
 </table>
 
-<h4 id="example-postgis-config">Example PostGIS config</h4>
+<h4 id="example-postgis-provider-config">Example PostGIS Provider config</h4>
 
 <pre><code class="language-toml">[[providers]]
 name = &quot;test_postgis&quot;   # provider name is referenced from map layers
-type = &quot;postgis&quot;        # the type of data provider. currently only supports postgis
+type = &quot;postgis&quot;        # the type of data provider.
 host = &quot;localhost&quot;      # postgis database host
 port = 5432             # postgis database port
 database = &quot;tegola&quot;     # postgis database name
@@ -422,7 +431,90 @@ password = &quot;&quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 </code></pre>
 
-<h3 id="provider-layers">Provider layers</h3>
+<h2 id="provider-layers">Provider Layers</h2>
+
+<p>Provider Layers are referenced by <a href="#map-layers">Map Layers</a> using the dot syntax <code>provder_name.provider_layer_name</code> (i.e. <code>my_postgis.rivers</code>). Provider Layers are required to have a <code>name</code> and will typically have additional parameters which are specific to that Provider. A Provider Layer has the following top level configuration parameters:</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>name</td>
+<td align="center">Yes</td>
+<td align="right">The name that will be referenced from a map layer.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="postgis-provider-layer">PostGIS Provider Layer</h3>
+
+<p>PostGIS Provider Layers define how Tegola will fetch data for a layer form a <a href="#postgis">PostGIS</a> Provider. The configuration requires either <code>tablename</code> or <code>sql</code> to be defined, but not both. The PostGIS Provider Layer has the following configuration prarameters:</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="center">Default</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>tablename</strong></td>
+<td align="center">Yes*</td>
+<td align="center"></td>
+<td align="right">The name of the database table to query.</td>
+</tr>
+
+<tr>
+<td><strong>sql</strong></td>
+<td align="center">Yes*</td>
+<td align="center"></td>
+<td align="right">Custom SQL. Requires a !BBOX! token</td>
+</tr>
+
+<tr>
+<td>geometry_fieldname</td>
+<td align="center">No</td>
+<td align="center">geom</td>
+<td align="right">The name of the geometry field in the table</td>
+</tr>
+
+<tr>
+<td>id_fieldname</td>
+<td align="center">No</td>
+<td align="center">gid</td>
+<td align="right">The name of the feature ID field in the table</td>
+</tr>
+
+<tr>
+<td>srid</td>
+<td align="center">No</td>
+<td align="center">3857</td>
+<td align="right">The SRID for the table. Can be 3857 of 4326.</td>
+</tr>
+
+<tr>
+<td>fields</td>
+<td align="center">No</td>
+<td align="center"></td>
+<td align="right">Fields to include as tag values. Useful when using <strong>tablename</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p>&#42; Either <code>tablename</code> or <code>sql</code> is required, but not both.</p>
+
+<h4 id="example-postgis-provider-layer-with-tablename-defined">Example PostGIS Provider Layer with <code>tablename</code> defined</h4>
 
 <pre><code class="language-toml">[[providers.layers]]
 name = &quot;landuse&quot;                    # will be encoded as the layer name in the tile
@@ -432,13 +524,85 @@ id_fieldname = &quot;gid&quot;                # geom id field. default is gid
 srid = 4326                         # the srid of table's geo data.
 </code></pre>
 
+<h4 id="example-postgis-provider-layer-with-sql-defined-notice-the-use-of-of-the-bbox-token-in-the-sql-statement">Example PostGIS Provider Layer with <code>sql</code> defined. Notice the use of of the <code>!BBOX!</code> token in the SQL statement:</h4>
+
+<pre><code class="language-toml">[[providers.layers]]
+name = &quot;landuse&quot;                    # will be encoded as the layer name in the tile
+# Custom sql to be used for this layer. 
+# Note that the geometery field is wraped in ST_AsBinary()
+# as Tegola is expecting Well Known Binary (WKB) format.
+sql = &quot;&quot;&quot;
+	SELECT
+		gid,
+		ST_AsBinary(geom) AS geom
+	FROM
+		gis.rivers
+	WHERE
+		geom &amp;&amp; !BBOX!
+&quot;&quot;&quot;
+</code></pre>
+
 <h2 id="maps">Maps</h2>
+
+<p>Tegola is responsible for serving vector map tiles, which are made up of numerous <a href="#map-layers">Map Layers</a>. The name of the Map is used in the URL of all map tile requests (i.e. /maps/:map_name/:z/:x/:y). Maps have the following configuration parameters:</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>name</td>
+<td align="center">Yes</td>
+<td align="right">The map that will be referenced in the URL (i.e. /maps/:map_name.</td>
+</tr>
+</tbody>
+</table>
 
 <pre><code class="language-toml">[[maps]]
 name = &quot;zoning&quot;		# used in the URL to reference this map (/maps/:map_name)
 </code></pre>
 
-<h3 id="map-layers">Map layers</h3>
+<h2 id="map-layers">Map Layers</h2>
+
+<p>Map Layers define which <a href="#provider-layers">Provider Layers</a> to render at what zoom levels. Map Layers have the following configuration parameters:</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>provider_layer</td>
+<td align="center">Yes</td>
+<td align="right">The name of the provider and provider layer using dot syntax. (i.e. my_postgis.rivers).</td>
+</tr>
+
+<tr>
+<td>min_zoom</td>
+<td align="center">No</td>
+<td align="right">The minium zoom to render this layer at.</td>
+</tr>
+
+<tr>
+<td>max_zoom</td>
+<td align="center">No</td>
+<td align="right">The maximum zoom to render this layer at.</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="example-map-layer">Example Map Layer</h4>
 
 <pre><code class="language-toml">[[maps.layers]]
 provider_layer = &quot;test_postgis.landuse&quot; # must match a data provider layer
@@ -446,10 +610,81 @@ min_zoom = 12                       	# minimum zoom level to include this layer
 max_zoom = 16                       	# maximum zoom level to include this layer
 </code></pre>
 
-<h3 id="map-layers-default-tags">Map layers default tags</h3>
+<h2 id="map-layer-default-tags">Map Layer Default Tags</h2>
+
+<p>Map Layer Default Tags provide a convenient way to encode additional tags that are not supplied by a data provider. If a Defalt Tag is defined and the same tag is returned by the Provider, the Provider defined tage will take precedence.</p>
+
+<p>Default Tags are <code>key = value</code> pairs.</p>
+
+<h4 id="example-map-layer-default-tags">Example Map Layer Default Tags</h4>
 
 <pre><code class="language-toml">[maps.layers.default_tags]      
-class = &quot;park&quot;          # a default tag to encode into the feature
+class = &quot;park&quot;			# a default tag to encode into the feature
+</code></pre>
+
+<h2 id="full-config-example">Full Config Example</h2>
+
+<p>The following config demonstrates the various concepts discussed above:</p>
+
+<pre><code class="language-toml">[webserver]
+port = &quot;:9090&quot;
+
+# register data providers
+[[providers]]
+name = &quot;test_postgis&quot;   # provider name is referenced from map layers
+type = &quot;postgis&quot;        # the type of data provider. currently only supports postgis
+host = &quot;localhost&quot;      # postgis database host
+port = 5432             # postgis database port
+database = &quot;tegola&quot;     # postgis database name
+user = &quot;tegola&quot;         # postgis database user
+password = &quot;&quot;           # postgis database password
+srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+
+    # Example data
+    [[providers.layers]]
+    name = &quot;landuse&quot;                    # will be encoded as the layer name in the tile
+    tablename = &quot;gis.zoning_base_3857&quot;  # sql or table_name are required
+    geometry_fieldname = &quot;geom&quot;         # geom field. default is geom
+    id_fieldname = &quot;gid&quot;                # geom id field. default is gid
+    srid = 4326                         # the SRID of the geometry field if different than 
+
+    [[providers.layers]]
+    name = &quot;roads&quot;                      # will be encoded as the layer name in the tile
+    tablename = &quot;gis.zoning_base_3857&quot;  # sql or table_name are required
+    geometry_fieldname = &quot;geom&quot;         # geom field. default is geom
+    id_fieldname = &quot;gid&quot;                # geom id field. default is gid
+    fields = [ &quot;class&quot;, &quot;name&quot; ]        # Additional fields to include in the select statement.
+
+    [[providers.layers]]
+    name = &quot;rivers&quot;                     # will be encoded as the layer name in the tile
+    # Custom sql to be used for this layer. 
+    # Note that the geometery field is wraped in a ST_AsBinary()
+    sql = &quot;&quot;&quot;
+        SELECT
+            gid,
+            ST_AsBinary(geom) AS geom
+        FROM
+            gis.rivers
+        WHERE
+            geom &amp;&amp; !BBOX!
+    &quot;&quot;&quot;
+
+# maps are made up of layers
+[[maps]]
+name = &quot;zoning&quot;                             # used in the URL to reference this map (/maps/:map_name)
+
+    [[maps.layers]]
+    provider_layer = &quot;test_postgis.landuse&quot; # must match a data provider layer
+    min_zoom = 12                           # minimum zoom level to include this layer
+    max_zoom = 16                           # maximum zoom level to include this layer
+
+        [maps.layers.default_tags]          # table of default tags to encode in the tile. SQL statements will override
+        class = &quot;park&quot;
+
+    [[maps.layers]]
+    provider_layer = &quot;test_postgis.rivers&quot;  # must match a data provider layer
+    min_zoom = 10                           # minimum zoom level to include this layer
+    max_zoom = 18                           # maximum zoom level to include this layer
 </code></pre>
 
 
