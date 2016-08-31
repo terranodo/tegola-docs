@@ -1,6 +1,6 @@
 baseurl = "http://tegola.io/"
 languageCode = "en-us"
-title = "Tegola - A MVT vector tile server"
+title = "Tegola - Vector tile server (MVT)"
 theme = "hugo-material-docs"
 metadataformat = "yaml"
 canonifyurls = true

@@ -25,11 +25,11 @@ Next, you'll need a source of data. For your convenience we've provided a downlo
 
 Tegola utilizes a single configuration file to control it's actions and coordinate with data source(s). This configuration file is written in TOML format. If you're unfamiliar with TOML, you can find documentation [here](https://github.com/toml-lang/toml).
 
-Create your configuration file with any text editor and name it `config.toml`. Next, copy and paste the following into this configuration file:
+Create your configuration file in the same directory as the Tegola binary and name it `config.toml`. Next, copy and paste the following into this configuration file:
 
 ```toml
 [webserver]
-port = ":9090"
+port = ":8080"
 
 # register data providers
 [[providers]]
@@ -43,7 +43,17 @@ password = ""           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 ```
 
-## 4. Create an HTML page
+## 4. Start Tegola
+
+Navigate to the Tegola directory in your computer's terminal and run this command:
+
+```sh
+./tegola --config=config.toml
+```
+
+You should see a message confirming the config file load and Tegola being started on port 8080. If your computer's port 8080 is being used by another process, change the port in the config file to an open port.
+
+## 5. Create an HTML page
 
 Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we'll be setting up a basic HTML page as our client that will display the rendered map. We'll be using the [Open Layers](http://openlayers.org/) client side library to display and style the vector tile content.
 
