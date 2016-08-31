@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getting-starteds on Tegola - A MVT vector tile server</title>
+    <link>http://tegola.io/getting-started/</link>
+    <description>Recent content in Getting-starteds on Tegola - A MVT vector tile server</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 09 Mar 2016 00:11:02 +0100</lastBuildDate>
+    <atom:link href="http://tegola.io/getting-started/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Getting started</title>
+      <link>http://tegola.io/getting-started/</link>
+      <pubDate>Wed, 09 Mar 2016 00:11:02 +0100</pubDate>
+      
+      <guid>http://tegola.io/getting-started/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-download-tegola&#34;&gt;1. Download Tegola&lt;/h2&gt;
+
+&lt;p&gt;Download the &lt;a href=&#34;https://github.com/terranodo/tegola/releases&#34;&gt;latest version&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_darwin_amd64&#34;&gt;OSX&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_windows_amd64.exe&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_linux_amd64&#34;&gt;Linux&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Find the Tegola file that was downloaded and move it into a fresh directory.&lt;/p&gt;
+
+&lt;h2 id=&#34;2-get-a-data-provider&#34;&gt;2. Get a data provider&lt;/h2&gt;
+
+&lt;p&gt;Tegola needs geospatial data to run. Currently, the only supported data format is PostGIS which is a format on top of PostgreSQL. If you do not have it installed, &lt;a href=&#34;http://postgis.net/install/&#34;&gt;download PostGIS&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, you&amp;rsquo;ll need a source of data. For your convenience we&amp;rsquo;ve provided a download of sample PostGIS data &lt;a href=&#34;www.link.com&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;3-create-a-configuration-file&#34;&gt;3. Create a configuration file&lt;/h2&gt;
+
+&lt;p&gt;Tegola utilizes a single configuration file to control it&amp;rsquo;s actions and coordinate with data source(s). This configuration file is written in TOML format. If you&amp;rsquo;re unfamiliar with TOML, you can find documentation &lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Create your configuration file with any text editor and name it &lt;code&gt;config.toml&lt;/code&gt;. Next, copy and paste the following into this configuration file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;
+[webserver]
+port = &amp;quot;:9090&amp;quot;
+
+# register data providers
+[[providers]]
+name = &amp;quot;bonn&amp;quot;           # provider name is referenced from map layers
+type = &amp;quot;postgis&amp;quot;        # the type of data provider. currently only supports postgis
+host = &amp;quot;localhost&amp;quot;      # postgis database host
+port = 5432             # postgis database port
+database = &amp;quot;tegola&amp;quot;     # postgis database name
+user = &amp;quot;tegola&amp;quot;         # postgis database user
+password = &amp;quot;&amp;quot;           # postgis database password
+srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;4-create-an-html-page&#34;&gt;4. Create an HTML page&lt;/h2&gt;
+
+&lt;p&gt;Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&amp;rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&amp;rsquo;ll be using the &lt;a href=&#34;http://openlayers.org/&#34;&gt;Open Layers&lt;/a&gt; client side library to display and style the vector tile content.&lt;/p&gt;
+
+&lt;p&gt;Create a new file, copy in the contents below, and open in a browser:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+  &amp;lt;head&amp;gt;
+    &amp;lt;title&amp;gt;Mapbox Vector Tiles&amp;lt;/title&amp;gt;
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;http://openlayers.org/en/v3.16.0/css/ol.css&amp;quot; type=&amp;quot;text/css&amp;quot;&amp;gt;
+    &amp;lt;script src=&amp;quot;http://openlayers.org/en/v3.16.0/build/ol.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;style&amp;gt;
+      .map {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #f8f4f0;
+      }
+    &amp;lt;/style&amp;gt;
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body&amp;gt;
+    &amp;lt;div id=&amp;quot;map&amp;quot; class=&amp;quot;map&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+      &amp;lt;script&amp;gt;
+        var map = new ol.Map({
+          layers: [
+            new ol.layer.VectorTile({
+              source: new ol.source.VectorTile({
+                attributions: &#39;© &amp;lt;a href=&amp;quot;https://www.mapbox.com/map-feedback/&amp;quot;&amp;gt;Mapbox&amp;lt;/a&amp;gt; &#39; +
+                &#39;© &amp;lt;a href=&amp;quot;http://www.openstreetmap.org/copyright&amp;quot;&amp;gt;&#39; +
+                &#39;OpenStreetMap contributors&amp;lt;/a&amp;gt;&#39;,
+                format: new ol.format.MVT(),
+                tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
+                tilePixelRatio: 16,
+                url:&#39;/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true&#39;
+              })
+            })
+          ],
+          target: &#39;map&#39;,
+          view: new ol.View({
+            center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
+            zoom: 14
+          })
+        });
+    &amp;lt;/script&amp;gt;
+  &amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If everything was successful, you should see a map of Bonn in your browser.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

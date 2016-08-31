@@ -8,4 +8,8 @@ Navigate to the repository and then run `hugo server`.
 
 ### Deploying the docs
 
-Coming soon.
+Build the site to the `docs/` folder, then commit and push to master:
+
+```
+hugo -d docs
+```

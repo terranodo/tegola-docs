@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Configurations on Tegola - A MVT vector tile server</title>
+    <link>http://tegola.io/configuration/</link>
+    <description>Recent content in Configurations on Tegola - A MVT vector tile server</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 30 Aug 2016 00:11:02 +0100</lastBuildDate>
+    <atom:link href="http://tegola.io/configuration/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Configuration</title>
+      <link>http://tegola.io/configuration/</link>
+      <pubDate>Tue, 30 Aug 2016 00:11:02 +0100</pubDate>
+      
+      <guid>http://tegola.io/configuration/</guid>
+      <description>
+
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;To use Tegola, you only need two things: Tegola and a Tegola config file. The Tegola config file use &lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;TOML&lt;/a&gt; syntax and is comprised of three primary sections:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#webserver&#34;&gt;Webserver&lt;/a&gt;: webserver configuration.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#providers&#34;&gt;Providers&lt;/a&gt;: data provider configuration (i.e. PostGIS).&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#maps&#34;&gt;Maps&lt;/a&gt;: map configuration including map names, layers and zoom levels.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;webserver&#34;&gt;Webserver&lt;/h2&gt;
+
+&lt;p&gt;The webserver part of the config has the following parameters:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Param&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Required&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Default&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;port&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;No&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;:8080&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;A string with the value for port.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;log-file&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;No&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;Location of a log file to write webserver logs to.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Example config&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[webserver]
+port = &amp;quot;:8080&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;providers&#34;&gt;Providers&lt;/h2&gt;
+
+&lt;p&gt;The providers configuration tells Tegola where your data lives. Currently Tegola supports PostGIS as a data provider, but it&amp;rsquo;s positioned to support additional data providers. Data providers each have their own specific configuration, but all are required to have the following two config params:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Param&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;name&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;User defined data provider name. This is used by map layers to reference the data provider.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;type&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The type of data provider.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&#34;postgis&#34;&gt;PostGIS&lt;/h3&gt;
+
+&lt;p&gt;In addition to the required &lt;code&gt;name&lt;/code&gt; and &lt;code&gt;type&lt;/code&gt; parameters, a PostGIS data provider has the following additional params:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Param&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Required&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;Default&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;host&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The database host.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;port&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;No&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5432&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The port the database is listening on.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;database&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The name of the database&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;user&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The database user&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;password&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;Yes&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The database user&amp;rsquo;s password&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;srid&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;No&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3857&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;The default SRID for this data provider&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h4 id=&#34;example-postgis-config&#34;&gt;Example PostGIS config&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[[providers]]
+name = &amp;quot;test_postgis&amp;quot;   # provider name is referenced from map layers
+type = &amp;quot;postgis&amp;quot;        # the type of data provider. currently only supports postgis
+host = &amp;quot;localhost&amp;quot;      # postgis database host
+port = 5432             # postgis database port
+database = &amp;quot;tegola&amp;quot;     # postgis database name
+user = &amp;quot;tegola&amp;quot;         # postgis database user
+password = &amp;quot;&amp;quot;           # postgis database password
+srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;provider-layers&#34;&gt;Provider layers&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[[providers.layers]]
+name = &amp;quot;landuse&amp;quot;                    # will be encoded as the layer name in the tile
+tablename = &amp;quot;gis.zoning_base_3857&amp;quot;  # sql or table_name are required
+geometry_fieldname = &amp;quot;geom&amp;quot;         # geom field. default is geom
+id_fieldname = &amp;quot;gid&amp;quot;                # geom id field. default is gid
+srid = 4326                         # the srid of table&#39;s geo data.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;maps&#34;&gt;Maps&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[[maps]]
+name = &amp;quot;zoning&amp;quot;		# used in the URL to reference this map (/maps/:map_name)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;map-layers&#34;&gt;Map layers&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[[maps.layers]]
+provider_layer = &amp;quot;test_postgis.landuse&amp;quot; # must match a data provider layer
+min_zoom = 12                       	# minimum zoom level to include this layer
+max_zoom = 16                       	# maximum zoom level to include this layer
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;map-layers-default-tags&#34;&gt;Map layers default tags&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[maps.layers.default_tags]      
+class = &amp;quot;park&amp;quot;          # a default tag to encode into the feature
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

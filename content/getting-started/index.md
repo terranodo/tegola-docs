@@ -34,7 +34,7 @@ port = ":9090"
 
 # register data providers
 [[providers]]
-name = "bonn"   # provider name is referenced from map layers
+name = "bonn"           # provider name is referenced from map layers
 type = "postgis"        # the type of data provider. currently only supports postgis
 host = "localhost"      # postgis database host
 port = 5432             # postgis database port

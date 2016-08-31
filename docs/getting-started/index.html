@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Getting started - Tegola - A MVT vector tile server</title>
+    <meta name="generator" content="Hugo 0.16" />
+
+    
+    <meta name="description" content="A MVT vector tile server">
+    
+    <link rel="canonical" href="http://tegola.io/getting-started/">
+    
+
+    <meta property="og:url" content="http://tegola.io/getting-started/">
+    <meta property="og:title" content="Tegola - A MVT vector tile server">
+    <meta property="og:image" content="http://tegola.io/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="Tegola - A MVT vector tile server">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://tegola.io/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="http://tegola.io/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://tegola.io/fonts/icon.eot?52m981');
+        src: url('http://tegola.io/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://tegola.io/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://tegola.io/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://tegola.io/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://tegola.io/stylesheets/application.css">
+    <link rel="stylesheet" href="http://tegola.io/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://tegola.io/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://tegola.io/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu%2bMono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://tegola.io/javascripts/modernizr.js"></script>
+
+    
+
+    
+    <link rel="stylesheet" href="http://openlayers.org/en/v3.18.1/css/ol.css" type="text/css">
+    <script src="http://openlayers.org/en/v3.18.1/build/ol.js" type="text/javascript"></script>
+
+  </head>
+  <body class="palette-primary-indigo palette-accent-teal">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Getting started
+      </div>
+    </div>
+
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/terranodo" title="@terranodo on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="https://github.com/terranodo/tegola" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="http://tegola.io/images/logo.png">
+        </div>
+      
+      <div class="name">
+        <strong>Tegola - A MVT vector tile server <span class="version">0.2.0</span></strong>
+        
+          <br>
+          terranodo/tegola
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            <a href="https://github.com/terranodo/tegola/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/terranodo/tegola/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Welcome" href="http://tegola.io/">
+	
+	Welcome
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a class="current" title="Getting started" href="http://tegola.io/getting-started/">
+	
+	Getting started
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Configuration" href="http://tegola.io/configuration/">
+	
+	Configuration
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Debugging" href="http://tegola.io/debugging/">
+	
+	Debugging
+</a>
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+
+          
+          <li>
+            <a href="https://github.com/terranodo" target="_blank" title="@terranodo on GitHub">
+              @terranodo on GitHub
+            </a>
+          </li>
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Getting started </h1>
+
+			
+
+<h2 id="1-download-tegola">1. Download Tegola</h2>
+
+<p>Download the <a href="https://github.com/terranodo/tegola/releases">latest version</a>.</p>
+
+<p>Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:</p>
+
+<ul>
+<li><a href="https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_darwin_amd64">OSX</a></li>
+<li><a href="https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_windows_amd64.exe">Windows</a></li>
+<li><a href="https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_linux_amd64">Linux</a></li>
+</ul>
+
+<p>Find the Tegola file that was downloaded and move it into a fresh directory.</p>
+
+<h2 id="2-get-a-data-provider">2. Get a data provider</h2>
+
+<p>Tegola needs geospatial data to run. Currently, the only supported data format is PostGIS which is a format on top of PostgreSQL. If you do not have it installed, <a href="http://postgis.net/install/">download PostGIS</a></p>
+
+<p>Next, you&rsquo;ll need a source of data. For your convenience we&rsquo;ve provided a download of sample PostGIS data <a href="www.link.com">here</a>.</p>
+
+<h2 id="3-create-a-configuration-file">3. Create a configuration file</h2>
+
+<p>Tegola utilizes a single configuration file to control it&rsquo;s actions and coordinate with data source(s). This configuration file is written in TOML format. If you&rsquo;re unfamiliar with TOML, you can find documentation <a href="https://github.com/toml-lang/toml">here</a>.</p>
+
+<p>Create your configuration file with any text editor and name it <code>config.toml</code>. Next, copy and paste the following into this configuration file:</p>
+
+<pre><code class="language-toml">
+[webserver]
+port = &quot;:9090&quot;
+
+# register data providers
+[[providers]]
+name = &quot;bonn&quot;           # provider name is referenced from map layers
+type = &quot;postgis&quot;        # the type of data provider. currently only supports postgis
+host = &quot;localhost&quot;      # postgis database host
+port = 5432             # postgis database port
+database = &quot;tegola&quot;     # postgis database name
+user = &quot;tegola&quot;         # postgis database user
+password = &quot;&quot;           # postgis database password
+srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+
+</code></pre>
+
+<h2 id="4-create-an-html-page">4. Create an HTML page</h2>
+
+<p>Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&rsquo;ll be using the <a href="http://openlayers.org/">Open Layers</a> client side library to display and style the vector tile content.</p>
+
+<p>Create a new file, copy in the contents below, and open in a browser:</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Mapbox Vector Tiles&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;http://openlayers.org/en/v3.16.0/css/ol.css&quot; type=&quot;text/css&quot;&gt;
+    &lt;script src=&quot;http://openlayers.org/en/v3.16.0/build/ol.js&quot;&gt;&lt;/script&gt;
+    &lt;style&gt;
+      .map {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #f8f4f0;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;map&quot; class=&quot;map&quot;&gt;&lt;/div&gt;
+      &lt;script&gt;
+        var map = new ol.Map({
+          layers: [
+            new ol.layer.VectorTile({
+              source: new ol.source.VectorTile({
+                attributions: '© &lt;a href=&quot;https://www.mapbox.com/map-feedback/&quot;&gt;Mapbox&lt;/a&gt; ' +
+                '© &lt;a href=&quot;http://www.openstreetmap.org/copyright&quot;&gt;' +
+                'OpenStreetMap contributors&lt;/a&gt;',
+                format: new ol.format.MVT(),
+                tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
+                tilePixelRatio: 16,
+                url:'/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true'
+              })
+            })
+          ],
+          target: 'map',
+          view: new ol.View({
+            center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
+            zoom: 14
+          })
+        });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>If everything was successful, you should see a map of Bonn in your browser.</p>
+
+
+			<aside class="copyright" role="note">
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+      <a href="http://tegola.io/" title="Welcome to Tegola">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              Welcome to Tegola
+            </div>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+
+  <div class="next">
+  
+      <a href="http://tegola.io/configuration/" title="Configuration">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              Configuration
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+</nav>
+
+
+
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'http:\/\/tegola.io\/';
+      var repo_id  = 'terranodo\/tegola';
+    
+    </script>
+
+    <script src="http://tegola.io/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+            
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+        
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//gohugo.io/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

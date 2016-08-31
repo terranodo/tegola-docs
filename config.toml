@@ -1,6 +1,6 @@
 baseurl = "http://tegola.io/"
 languageCode = "en-us"
-title = "Tegola - An MVT vector tile server"
+title = "Tegola - A MVT vector tile server"
 theme = "hugo-material-docs"
 metadataformat = "yaml"
 canonifyurls = true
@@ -10,7 +10,7 @@ googleAnalytics = ""
 [params]
 	# General information
 	author = ""
-	description = "An MVT vector tile server"
+	description = "A MVT vector tile server"
 	copyright = ""
 
 	# Repository
@@ -44,7 +44,7 @@ googleAnalytics = ""
 
 # main menu
 [[menu.main]]
-	name   = "Overview"
+	name   = "Welcome"
 	url    = "/"
 	weight = 0
 
@@ -54,24 +54,14 @@ googleAnalytics = ""
 	weight = 10
 
 [[menu.main]]
-	name   = "Examples"
-	url    = "examples/"
-	weight = 20
-
-[[menu.main]]
 	name   = "Configuration"
 	url    = "configuration/"
-	weight = 30
-
-[[menu.main]]
-	name   = "Data providers"
-	url    = "data-providers/"
-	weight = 40
+	weight = 20
 
 [[menu.main]]
 	name   = "Debugging"
 	url    = "debugging/"
-	weight = 50	
+	weight = 30	
 
 
 [blackfriday]
