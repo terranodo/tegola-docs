@@ -127,7 +127,7 @@ sql = """
 
 ## Maps
 
-Tegola is responsible for serving vector map tiles, which are made up of numerous [Map Layers](#map-layers). The name of the Map is used in the URL of all map tile requests (i.e. /maps/:map_name/:z/:x/:y). Maps have the following configuration parameters:
+Tegola is responsible for serving vector map tiles, which are made up of numerous [Map Layers](#map-layers). The name of the Map is used in the URL of all map tile requests (i.e. [/maps/:map_name/:z/:x/:y](/endpoints/#maps-map-z-x-y)). Maps have the following configuration parameters:
 
 
 | Param              | Required | Description                                                      |

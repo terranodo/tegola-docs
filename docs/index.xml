@@ -30,7 +30,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Simple to setup.&lt;/strong&gt; All you need is the Tegola binary and a config file.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Extensible.&lt;/strong&gt; Tegola is designed to support multiple data providers. Currently supports PostGIS.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Open source.&lt;/strong&gt; Tegola is open to collaborators - and with an MIT license, it&amp;rsquo;s available for anyone to use!&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Open source.&lt;/strong&gt; Tegola is open source and hosted on Github.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Written in Go.&lt;/strong&gt; Go allows Tegola to be highly concurrent, lightweight and easy to deploy.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;MIT Licensed.&lt;/strong&gt; Tegola comes with the very liberal MIT license.&lt;/li&gt;
 &lt;/ul&gt;
@@ -464,7 +464,7 @@ sql = &amp;quot;&amp;quot;&amp;quot;
 
 &lt;h2 id=&#34;maps&#34;&gt;Maps&lt;/h2&gt;
 
-&lt;p&gt;Tegola is responsible for serving vector map tiles, which are made up of numerous &lt;a href=&#34;#map-layers&#34;&gt;Map Layers&lt;/a&gt;. The name of the Map is used in the URL of all map tile requests (i.e. /maps/:map_name/:z/:x/:y). Maps have the following configuration parameters:&lt;/p&gt;
+&lt;p&gt;Tegola is responsible for serving vector map tiles, which are made up of numerous &lt;a href=&#34;#map-layers&#34;&gt;Map Layers&lt;/a&gt;. The name of the Map is used in the URL of all map tile requests (i.e. &lt;a href=&#34;http://tegola.io/endpoints/#maps-map-z-x-y&#34;&gt;/maps/:map_name/:z/:x/:y&lt;/a&gt;). Maps have the following configuration parameters:&lt;/p&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -621,11 +621,12 @@ name = &amp;quot;zoning&amp;quot;                             # used in the URL 
 
 &lt;p&gt;The following environment variables can be used for debugging the tegola server:&lt;/p&gt;
 
-&lt;p&gt;SQL_DEBUG: specify the type of SQL debug information to output. Supports the following values:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SQL_DEBUG&lt;/code&gt;: specify the type of SQL debug information to output. Supports the following values:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;LAYER_SQL&lt;/code&gt;: print layer SQL as they&amp;rsquo;re parsed from the config file.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;EXCUTE_SQL&lt;/code&gt;: print SQL that is executed for each tile request and the number of items it returns or an error.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EXECUTE_SQL&lt;/code&gt;: print SQL that is executed for each tile request and the number of items it returns or an error.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LAYER_SQL:EXECUTE_SQL&lt;/code&gt;: print &lt;code&gt;LAYER_SQL&lt;/code&gt; and &lt;code&gt;EXECUTE_SQL&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h4 id=&#34;example&#34;&gt;Example&lt;/h4&gt;
@@ -647,6 +648,75 @@ name = &amp;quot;zoning&amp;quot;                             # used in the URL 
 &lt;li&gt;&lt;code&gt;debug_text&lt;/code&gt;: a point feature in the middle of the tile with the following tags:&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;zxy&lt;/code&gt;: a string with the Z, X and Y values formatted as: Z:0, X:0, Y:0&lt;/li&gt;
 &lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>HTTP endpoints</title>
+      <link>http://tegola.io/endpoints/</link>
+      <pubDate>Tue, 30 Aug 2016 00:11:02 +0100</pubDate>
+      
+      <guid>http://tegola.io/endpoints/</guid>
+      <description>
+
+&lt;p&gt;The following endpoints are used for communicating with Tegola over HTTP. All the endpoints expect a HTTP &lt;code&gt;GET&lt;/code&gt; request.&lt;/p&gt;
+
+&lt;h2 id=&#34;maps-map-z-x-y&#34;&gt;/maps/:map/:z/:x/:y&lt;/h2&gt;
+
+&lt;p&gt;Will return a vector tile from the provided &lt;code&gt;:map&lt;/code&gt; at the provided &lt;code&gt;:z&lt;/code&gt;, &lt;code&gt;:x&lt;/code&gt;: and &lt;code&gt;:y&lt;/code&gt; values.&lt;/p&gt;
+
+&lt;h3 id=&#34;url-parameters&#34;&gt;URL parameters&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:map&lt;/code&gt;: The name of the map as defined in the Tegola &lt;a href=&#34;http://tegola.io/configuration/#maps&#34;&gt;config&lt;/a&gt; file.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:z&lt;/code&gt;: The tile zoom.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:x&lt;/code&gt;: The tile row.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:y&lt;/code&gt;: The tile column.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;maps-map-layer-z-x-y&#34;&gt;/maps/:map/:layer/:z/:x/:y&lt;/h2&gt;
+
+&lt;p&gt;Will return a vector tile with a single &lt;code&gt;:layer&lt;/code&gt; from the provided &lt;code&gt;:map&lt;/code&gt; at the provided &lt;code&gt;:z&lt;/code&gt;, &lt;code&gt;:x&lt;/code&gt;: and &lt;code&gt;:y&lt;/code&gt; values.&lt;/p&gt;
+
+&lt;h3 id=&#34;url-parameters-1&#34;&gt;URL parameters&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:map&lt;/code&gt;: The name of the map as defined in the Tegola &lt;a href=&#34;http://tegola.io/configuration/#maps&#34;&gt;config&lt;/a&gt; file.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:layer&lt;/code&gt;: The name of the maps layer, as defined in the Tegola &lt;a href=&#34;http://tegola.io/configuration/#map-layers&#34;&gt;config&lt;/a&gt; file.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:z&lt;/code&gt;: The tile zoom.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:x&lt;/code&gt;: The tile row.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:y&lt;/code&gt;: The tile column.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;capabilities&#34;&gt;/capabilities&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;/capabilities&lt;/code&gt; endpoint returns JSON with details about the running Tegola instance.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-response&#34;&gt;Example response&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-json&#34;&gt;{
+	&amp;quot;version&amp;quot;: &amp;quot;v0.3.0&amp;quot;,
+	&amp;quot;maps&amp;quot;: [{
+		&amp;quot;name&amp;quot;: &amp;quot;bonn_osm&amp;quot;,
+		&amp;quot;uri&amp;quot;: &amp;quot;/maps/bonn_osm&amp;quot;,
+		&amp;quot;layers&amp;quot;: [{
+			&amp;quot;name&amp;quot;: &amp;quot;building&amp;quot;,
+			&amp;quot;uri&amp;quot;: &amp;quot;/maps/bonn_osm/building&amp;quot;,
+			&amp;quot;minZoom&amp;quot;: 14,
+			&amp;quot;maxZoom&amp;quot;: 20
+		}, {
+			&amp;quot;name&amp;quot;: &amp;quot;road&amp;quot;,
+			&amp;quot;uri&amp;quot;: &amp;quot;/maps/bonn_osm/road&amp;quot;,
+			&amp;quot;minZoom&amp;quot;: 10,
+			&amp;quot;maxZoom&amp;quot;: 20
+		}]
+	}]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;static&#34;&gt;/static&lt;/h2&gt;
+
+&lt;p&gt;The &lt;code&gt;/static&lt;/code&gt; endpoint provides a HTTP fileserver that will serve files from the &lt;code&gt;static/&lt;/code&gt; directory relative to the running Tegola instance. This is helpful during local development when testing Tegola with a client side library.&lt;/p&gt;
 </description>
     </item>
     

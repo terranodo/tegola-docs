@@ -4,6 +4,7 @@
   <url>
     <loc>http://tegola.io/</loc>
     <lastmod>2016-08-30T00:11:02+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -23,6 +24,11 @@
   
   <url>
     <loc>http://tegola.io/debugging/</loc>
+    <lastmod>2016-08-30T00:11:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://tegola.io/endpoints/</loc>
     <lastmod>2016-08-30T00:11:02+01:00</lastmod>
   </url>
   

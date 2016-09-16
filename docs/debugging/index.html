@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <title>Debugging - Tegola - Vector tile server (MVT)</title>
-    <meta name="generator" content="Hugo 0.16" />
+    <meta name="generator" content="Hugo 0.15" />
 
     
     <meta name="description" content="A MVT vector tile server">
@@ -140,7 +140,7 @@
         </div>
       
       <div class="name">
-        <strong>Tegola - Vector tile server (MVT) <span class="version">0.2.0</span></strong>
+        <strong>Tegola - Vector tile server (MVT) <span class="version">0.3.0</span></strong>
         
           <br>
           terranodo/tegola
@@ -233,6 +233,23 @@
 
 
 
+<a  title="HTTP endpoints" href="http://tegola.io/endpoints/">
+	
+	HTTP endpoints
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
 <a class="current" title="Debugging" href="http://tegola.io/debugging/">
 	
 	Debugging
@@ -282,11 +299,12 @@
 
 <p>The following environment variables can be used for debugging the tegola server:</p>
 
-<p>SQL_DEBUG: specify the type of SQL debug information to output. Supports the following values:</p>
+<p><code>SQL_DEBUG</code>: specify the type of SQL debug information to output. Supports the following values:</p>
 
 <ul>
 <li><code>LAYER_SQL</code>: print layer SQL as they&rsquo;re parsed from the config file.</li>
-<li><code>EXCUTE_SQL</code>: print SQL that is executed for each tile request and the number of items it returns or an error.</li>
+<li><code>EXECUTE_SQL</code>: print SQL that is executed for each tile request and the number of items it returns or an error.</li>
+<li><code>LAYER_SQL:EXECUTE_SQL</code>: print <code>LAYER_SQL</code> and <code>EXECUTE_SQL</code>.</li>
 </ul>
 
 <h4 id="example">Example</h4>
@@ -343,6 +361,22 @@
   </div>
 
   <div class="next">
+  
+      <a href="http://tegola.io/endpoints/" title="HTTP endpoints">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              HTTP endpoints
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
   
   </div>
 </nav>

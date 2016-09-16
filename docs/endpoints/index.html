@@ -9,16 +9,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Getting started - Tegola - Vector tile server (MVT)</title>
+    <title>HTTP endpoints - Tegola - Vector tile server (MVT)</title>
     <meta name="generator" content="Hugo 0.15" />
 
     
     <meta name="description" content="A MVT vector tile server">
     
-    <link rel="canonical" href="http://tegola.io/getting-started/">
+    <link rel="canonical" href="http://tegola.io/endpoints/">
     
 
-    <meta property="og:url" content="http://tegola.io/getting-started/">
+    <meta property="og:url" content="http://tegola.io/endpoints/">
     <meta property="og:title" content="Tegola - Vector tile server (MVT)">
     <meta property="og:image" content="http://tegola.io/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="Tegola - Vector tile server (MVT)">
@@ -99,7 +99,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        Getting started
+        HTTP endpoint
       </div>
     </div>
 
@@ -199,14 +199,11 @@
 
 
 
-<a class="current" title="Getting started" href="http://tegola.io/getting-started/">
+<a  title="Getting started" href="http://tegola.io/getting-started/">
 	
 	Getting started
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
   
 </li>
@@ -236,11 +233,14 @@
 
 
 
-<a  title="HTTP endpoints" href="http://tegola.io/endpoints/">
+<a class="current" title="HTTP endpoints" href="http://tegola.io/endpoints/">
 	
 	HTTP endpoints
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
   
 </li>
@@ -291,152 +291,68 @@
 
 	<article class="article">
 		<div class="wrapper">
-			<h1>Getting started </h1>
+			<h1>HTTP endpoints </h1>
 
 			
 
-<h2 id="1-download-tegola">1. Download Tegola</h2>
+<p>The following endpoints are used for communicating with Tegola over HTTP. All the endpoints expect a HTTP <code>GET</code> request.</p>
 
-<p>Download the <a href="https://github.com/terranodo/tegola/releases">latest version</a>.</p>
+<h2 id="maps-map-z-x-y">/maps/:map/:z/:x/:y</h2>
 
-<p>Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:</p>
+<p>Will return a vector tile from the provided <code>:map</code> at the provided <code>:z</code>, <code>:x</code>: and <code>:y</code> values.</p>
+
+<h3 id="url-parameters">URL parameters</h3>
 
 <ul>
-<li><a href="https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_darwin_amd64">OSX</a></li>
-<li><a href="https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_windows_amd64.exe">Windows</a></li>
-<li><a href="https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_linux_amd64">Linux</a></li>
+<li><code>:map</code>: The name of the map as defined in the Tegola <a href="http://tegola.io/configuration/#maps">config</a> file.</li>
+<li><code>:z</code>: The tile zoom.</li>
+<li><code>:x</code>: The tile row.</li>
+<li><code>:y</code>: The tile column.</li>
 </ul>
 
-<p>Find the Tegola file that was downloaded and move it into a fresh directory.</p>
+<h2 id="maps-map-layer-z-x-y">/maps/:map/:layer/:z/:x/:y</h2>
 
-<h2 id="2-get-a-data-provider">2. Get a data provider</h2>
+<p>Will return a vector tile with a single <code>:layer</code> from the provided <code>:map</code> at the provided <code>:z</code>, <code>:x</code>: and <code>:y</code> values.</p>
 
-<p>Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL. If you don&rsquo;t have PostGIS installed, <a href="http://postgis.net/install/">download PostGIS</a>.</p>
+<h3 id="url-parameters-1">URL parameters</h3>
 
-<p>Next, you&rsquo;ll need to load your data provider with data. For your convenience you can download <a href="https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz">PostGIS data for Bonn, Germany</a>.</p>
+<ul>
+<li><code>:map</code>: The name of the map as defined in the Tegola <a href="http://tegola.io/configuration/#maps">config</a> file.</li>
+<li><code>:layer</code>: The name of the maps layer, as defined in the Tegola <a href="http://tegola.io/configuration/#map-layers">config</a> file.</li>
+<li><code>:z</code>: The tile zoom.</li>
+<li><code>:x</code>: The tile row.</li>
+<li><code>:y</code>: The tile column.</li>
+</ul>
 
-<p>You&rsquo;ll need to create a new database (named &ldquo;bonn&rdquo;) and use a restore command to import the unzipped sql file into the database. Documentation can be found <a href="https://www.postgresql.org/docs/current/static/backup.html">here</a> under the section titled &ldquo;Restoring the dump&rdquo;. The command should look something like <code>psql bonn &lt; bonn_osm.sql</code>.</p>
+<h2 id="capabilities">/capabilities</h2>
 
-<h2 id="3-create-a-configuration-file">3. Create a configuration file</h2>
+<p>The <code>/capabilities</code> endpoint returns JSON with details about the running Tegola instance.</p>
 
-<p>Tegola utilizes a single configuration file to coordinate with data provider(s). This configuration file is written in <a href="https://github.com/toml-lang/toml">TOML format</a>.</p>
+<h3 id="example-response">Example response</h3>
 
-<p>Create your configuration file in the same directory as the Tegola binary and name it <code>config.toml</code>. Next, copy and paste the following into this file:</p>
-
-<pre><code class="language-toml">[webserver]
-port = &quot;:8080&quot;
-
-# register data providers
-[[providers]]
-name = &quot;bonn&quot;           # provider name is referenced from map layers
-type = &quot;postgis&quot;        # the type of data provider. currently only supports postgis
-host = &quot;localhost&quot;      # postgis database host
-port = 5432             # postgis database port
-database = &quot;bonn&quot;       # postgis database name
-user = &quot;tegola&quot;         # postgis database user
-password = &quot;&quot;           # postgis database password
-srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
-
-[[providers.layers]]
-  name = &quot;road&quot;
-  geometry_fieldname = &quot;wkb_geometry&quot;
-  id_fieldname = &quot;ogc_fid&quot;
-  sql = &quot;SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM all_roads_3857 WHERE wkb_geometry &amp;&amp; !BBOX!&quot;
-
-  [[providers.layers]]
-  name = &quot;main_roads&quot;
-  geometry_fieldname = &quot;wkb_geometry&quot;
-  id_fieldname = &quot;ogc_fid&quot;
-  sql = &quot;SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM main_roads_3857 WHERE wkb_geometry &amp;&amp; !BBOX!&quot;
-
-  [[providers.layers]]
-  name = &quot;lakes&quot;
-  geometry_fieldname = &quot;wkb_geometry&quot;
-  id_fieldname = &quot;ogc_fid&quot;
-  sql = &quot;SELECT ST_AsBinary(wkb_geometry) AS wkb_geometry, name, ogc_fid FROM lakes_3857 WHERE wkb_geometry &amp;&amp; !BBOX!&quot;
-
-[[maps]]
-name = &quot;zoning&quot;
-
-  [[maps.layers]]
-  provider_layer = &quot;bonn.road&quot;
-  min_zoom = 10
-  max_zoom = 20
-
-  [[maps.layers]]
-  provider_layer = &quot;bonn.main_roads&quot;
-  min_zoom = 5
-  max_zoom = 20
-
-  [[maps.layers]]
-  provider_layer = &quot;bonn.lakes&quot;
-  min_zoom = 5
-  max_zoom = 20
+<pre><code class="language-json">{
+	&quot;version&quot;: &quot;v0.3.0&quot;,
+	&quot;maps&quot;: [{
+		&quot;name&quot;: &quot;bonn_osm&quot;,
+		&quot;uri&quot;: &quot;/maps/bonn_osm&quot;,
+		&quot;layers&quot;: [{
+			&quot;name&quot;: &quot;building&quot;,
+			&quot;uri&quot;: &quot;/maps/bonn_osm/building&quot;,
+			&quot;minZoom&quot;: 14,
+			&quot;maxZoom&quot;: 20
+		}, {
+			&quot;name&quot;: &quot;road&quot;,
+			&quot;uri&quot;: &quot;/maps/bonn_osm/road&quot;,
+			&quot;minZoom&quot;: 10,
+			&quot;maxZoom&quot;: 20
+		}]
+	}]
+}
 </code></pre>
 
-<p>Note: This configuration file is specific to the Bonn data provided in step 2. If you&rsquo;re using another dataset reference the <a href="http://tegola.io/configuration">Configuration Documentation</a>.</p>
+<h2 id="static">/static</h2>
 
-<h2 id="4-start-tegola">4. Start Tegola</h2>
-
-<p>Navigate to the Tegola directory in your computer&rsquo;s terminal and run this command:</p>
-
-<pre><code class="language-sh">./tegola --config=config.toml
-</code></pre>
-
-<p>You should see a message confirming the config file load and Tegola being started on port 8080. If your computer&rsquo;s port 8080 is being used by another process, change the port in the config file to an open port.</p>
-
-<h2 id="5-create-an-html-page">5. Create an HTML page</h2>
-
-<p>Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&rsquo;ll be using the <a href="http://openlayers.org/">Open Layers</a> client side library to display and style the vector tile content.</p>
-
-<p>Create a new HTML file, copy in the contents below, and open in a browser:</p>
-
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Tegola Sample&lt;/title&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;http://openlayers.org/en/v3.16.0/css/ol.css&quot; type=&quot;text/css&quot;&gt;
-    &lt;script src=&quot;http://openlayers.org/en/v3.16.0/build/ol.js&quot;&gt;&lt;/script&gt;
-    &lt;style&gt;
-      #map {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background: #f8f4f0;
-      }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;div id=&quot;map&quot;&gt;&lt;/div&gt;
-    &lt;script&gt;
-      var map = new ol.Map({
-        layers: [
-          new ol.layer.VectorTile({
-            source: new ol.source.VectorTile({
-              attributions: '© &lt;a href=&quot;https://www.mapbox.com/map-feedback/&quot;&gt;Mapbox&lt;/a&gt; ' +
-              '© &lt;a href=&quot;http://www.openstreetmap.org/copyright&quot;&gt;' +
-              'OpenStreetMap contributors&lt;/a&gt;',
-              format: new ol.format.MVT(),
-              tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
-              tilePixelRatio: 16,
-              url:'/maps/zoning/{z}/{x}/{y}.vector.pbf?debug=true'
-            })
-          })
-        ],
-        target: 'map',
-        view: new ol.View({
-          center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
-          zoom: 14
-        })
-      });
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
-<p>If everything was successful, you should see a map of Bonn in your browser.</p>
-
-<p><img src="http://tegola.io/images/bonn.png" alt="Bonn, Germany" /></p>
+<p>The <code>/static</code> endpoint provides a HTTP fileserver that will serve files from the <code>static/</code> directory relative to the running Tegola instance. This is helpful during local development when testing Tegola with a client side library.</p>
 
 
 			<aside class="copyright" role="note">
@@ -453,7 +369,7 @@ name = &quot;zoning&quot;
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
   
-      <a href="http://tegola.io/" title="Welcome to Tegola">
+      <a href="http://tegola.io/debugging/" title="Debugging">
         <span class="direction">
           Previous
         </span>
@@ -463,7 +379,7 @@ name = &quot;zoning&quot;
           </div>
           <div class="stretch">
             <div class="title">
-              Welcome to Tegola
+              Debugging
             </div>
           </div>
         </div>
@@ -472,22 +388,6 @@ name = &quot;zoning&quot;
   </div>
 
   <div class="next">
-  
-      <a href="http://tegola.io/configuration/" title="Configuration">
-        <span class="direction">
-          Next
-        </span>
-        <div class="page">
-          <div class="stretch">
-            <div class="title">
-              Configuration
-            </div>
-          </div>
-          <div class="button button-next" role="button" aria-label="Next">
-            <i class="icon icon-forward"></i>
-          </div>
-        </div>
-      </a>
   
   </div>
 </nav>

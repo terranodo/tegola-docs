@@ -283,7 +283,7 @@ sql = &amp;quot;&amp;quot;&amp;quot;
 
 &lt;h2 id=&#34;maps&#34;&gt;Maps&lt;/h2&gt;
 
-&lt;p&gt;Tegola is responsible for serving vector map tiles, which are made up of numerous &lt;a href=&#34;#map-layers&#34;&gt;Map Layers&lt;/a&gt;. The name of the Map is used in the URL of all map tile requests (i.e. /maps/:map_name/:z/:x/:y). Maps have the following configuration parameters:&lt;/p&gt;
+&lt;p&gt;Tegola is responsible for serving vector map tiles, which are made up of numerous &lt;a href=&#34;#map-layers&#34;&gt;Map Layers&lt;/a&gt;. The name of the Map is used in the URL of all map tile requests (i.e. &lt;a href=&#34;http://tegola.io/endpoints/#maps-map-z-x-y&#34;&gt;/maps/:map_name/:z/:x/:y&lt;/a&gt;). Maps have the following configuration parameters:&lt;/p&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
