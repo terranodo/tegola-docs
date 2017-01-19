@@ -31,6 +31,7 @@
 &lt;li&gt;&lt;strong&gt;Simple to setup.&lt;/strong&gt; All you need is the Tegola binary and a config file.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Extensible.&lt;/strong&gt; Tegola is designed to support multiple data providers. Currently supports PostGIS.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Open source.&lt;/strong&gt; Tegola is open source and hosted on Github.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Parallelized.&lt;/strong&gt; Tegola uses all available CPUs.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Written in Go.&lt;/strong&gt; Go allows Tegola to be highly concurrent, lightweight and easy to deploy.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;MIT Licensed.&lt;/strong&gt; Tegola comes with the very liberal MIT license.&lt;/li&gt;
 &lt;/ul&gt;
