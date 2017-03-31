@@ -5,7 +5,7 @@ type: index
 weight: 0
 ---
 
-Tegola is a high performance Mapbox Vector Tile server written in [Go](https://golang.org). In a nutshell, Tegola takes geospatial data and slices it into vector tiles that can be efficiently delivered to any client. Tegola is creating and serving the vector tiles in the following map of Bonn, Germany:
+Tegola is a high performance Mapbox Vector Tile server written in [Go](https://golang.org). In a nutshell, Tegola takes geospatial data and slices it into vector tiles that can be efficiently delivered to any client. Tegola is creating and serving the vector tiles in the following map of San Diego, California:
 
 
 {{< map >}}
