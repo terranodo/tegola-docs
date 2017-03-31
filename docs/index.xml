@@ -19,11 +19,7 @@
 
 &lt;p&gt;Tegola is a high performance Mapbox Vector Tile server written in &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt;. In a nutshell, Tegola takes geospatial data and slices it into vector tiles that can be efficiently delivered to any client. Tegola is creating and serving the vector tiles in the following map of Bonn, Germany:&lt;/p&gt;
 
-&lt;iframe src=&#34;http://tegola.cfapps.io/&#34; style=&#34;margin-top:20px;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
-
-
-
-
+&lt;iframe src=&#34;http://demo.tegola.io/&#34; style=&#34;margin-top:20px;width:100%;height:300px;&#34;&gt;&lt;/iframe&gt;
 
 &lt;h3 id=&#34;tegola-is&#34;&gt;Tegola is:&lt;/h3&gt;
 
