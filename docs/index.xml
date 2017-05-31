@@ -49,9 +49,9 @@
 &lt;p&gt;Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_darwin_amd64&#34;&gt;OSX&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_windows_amd64.exe&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.2.0/tegola_linux_amd64&#34;&gt;Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_darwin_amd64&#34;&gt;OSX&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_windows_amd64.exe&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_linux_amd64&#34;&gt;Linux&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Find the Tegola file that was downloaded and move it into a fresh directory.&lt;/p&gt;
