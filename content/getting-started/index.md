@@ -5,23 +5,25 @@ weight: 10
 ---
 
 ## 1. Download Tegola
-Download the [latest version](https://github.com/terranodo/tegola/releases).
-
 Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:
 
 - [OSX](https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_darwin_amd64)
 - [Windows](https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_windows_amd64.exe)
 - [Linux](https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_linux_amd64)
 
-Find the Tegola file that was downloaded and move it into a fresh directory.
+Additional binaries for other operating systems and versions are [here](https://github.com/terranodo/tegola/releases).
 
-## 2. Get a data provider
+Find the Tegola file that was downloaded and move it into a fresh directory. Rename this file `tegola`.
+
+## 2. Set up a data provider
 
 Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL. If you don't have PostGIS installed, [download PostGIS](http://postgis.net/install/).
 
-Next, you'll need to load your data provider with data. For your convenience you can download [PostGIS data for Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz).
+You'll need to load your data provider with data. For your convenience, you can download [PostGIS data for Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz). Unzip this archive to extract the file `bonn_osm.sql`.
 
-You'll need to create a new database (named "bonn") and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/current/static/backup.html) under the section titled "Restoring the dump". The command should look something like `psql bonn < bonn_osm.sql`.
+Create a new database named `bonn`, and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/current/static/backup.html) under the section titled "Restoring the dump". The command should look something like `psql bonn < bonn_osm.sql`.
+
+To enable Tegola to connect to the database, create a database user named `tegola`. Grant superuser privileges to the `tegola` user. *NOTE: granting superuser privileges is done here to simplify the process of getting started, but may not be desirable in production. Use with caution.*
 
 ## 3. Create a configuration file
 
@@ -44,7 +46,7 @@ user = "tegola"         # postgis database user
 password = ""           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 
-[[providers.layers]]
+  [[providers.layers]]
   name = "road"
   geometry_fieldname = "wkb_geometry"
   id_fieldname = "ogc_fid"
@@ -81,7 +83,7 @@ name = "zoning"
   max_zoom = 20
 ```
 
-Note: This configuration file is specific to the Bonn data provided in step 2. If you're using another dataset reference the [Configuration Documentation](/configuration).
+Note: This configuration file is specific to the Bonn data provided in step 2. If you're using another dataset, reference the [Configuration Documentation](/configuration).
 
 ## 4. Start Tegola
 
@@ -95,17 +97,17 @@ You should see a message confirming the config file load and Tegola being starte
 
 ## 5. Create an HTML page
 
-Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we'll be setting up a basic HTML page as our client that will display the rendered map. We'll be using the [Open Layers](http://openlayers.org/) client side library to display and style the vector tile content.
+Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we'll be setting up a basic HTML page as our client that will display the rendered map. We'll be using the [OpenLayers](http://openlayers.org/) client side library to display and style the vector tile content.
 
-Create a new HTML file, copy in the contents below, and open in a browser:
+Create a new directory called `static` in the same directory as the Tegola binary. In `static`, create a new HTML file called `index.html`, copy in the contents below, and open in a browser:
 
 ```html
 <!DOCTYPE html>
 <html>
   <head>
     <title>Tegola Sample</title>
-    <link rel="stylesheet" href="http://openlayers.org/en/v3.16.0/css/ol.css" type="text/css">
-    <script src="http://openlayers.org/en/v3.16.0/build/ol.js"></script>
+    <link rel="stylesheet" href="http://openlayers.org/en/v4.3.1/css/ol.css" type="text/css">
+    <script src="http://openlayers.org/en/v4.3.1/build/ol.js"></script>
     <style>
       #map {
         width: 100%;
@@ -134,7 +136,7 @@ Create a new HTML file, copy in the contents below, and open in a browser:
         ],
         target: 'map',
         view: new ol.View({
-          center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
+          center: [790793, 6574927], //coordinates the map will center on initially
           zoom: 14
         })
       });
@@ -143,7 +145,6 @@ Create a new HTML file, copy in the contents below, and open in a browser:
 </html>
 ```
 
-If everything was successful, you should see a map of Bonn in your browser. 
+In your browser, navigate to [http://localhost:8080](http://localhost:8080). If everything was successful, you should see a map:
 
 ![Bonn, Germany](/images/bonn.png)
-
