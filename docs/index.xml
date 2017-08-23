@@ -44,8 +44,6 @@
 
 &lt;h2 id=&#34;1-download-tegola&#34;&gt;1. Download Tegola&lt;/h2&gt;
 
-&lt;p&gt;Download the &lt;a href=&#34;https://github.com/terranodo/tegola/releases&#34;&gt;latest version&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:&lt;/p&gt;
 
 &lt;ul&gt;
@@ -54,15 +52,19 @@
 &lt;li&gt;&lt;a href=&#34;https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_linux_amd64&#34;&gt;Linux&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Find the Tegola file that was downloaded and move it into a fresh directory.&lt;/p&gt;
+&lt;p&gt;Additional binaries for other operating systems and versions are &lt;a href=&#34;https://github.com/terranodo/tegola/releases&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;2-get-a-data-provider&#34;&gt;2. Get a data provider&lt;/h2&gt;
+&lt;p&gt;Find the Tegola file that was downloaded and move it into a fresh directory. Rename this file &lt;code&gt;tegola&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;2-set-up-a-data-provider&#34;&gt;2. Set up a data provider&lt;/h2&gt;
 
 &lt;p&gt;Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL. If you don&amp;rsquo;t have PostGIS installed, &lt;a href=&#34;http://postgis.net/install/&#34;&gt;download PostGIS&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Next, you&amp;rsquo;ll need to load your data provider with data. For your convenience you can download &lt;a href=&#34;https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz&#34;&gt;PostGIS data for Bonn, Germany&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll need to load your data provider with data. For your convenience, you can download &lt;a href=&#34;https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz&#34;&gt;PostGIS data for Bonn, Germany&lt;/a&gt;. Unzip this archive to extract the file &lt;code&gt;bonn_osm.sql&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;You&amp;rsquo;ll need to create a new database (named &amp;ldquo;bonn&amp;rdquo;) and use a restore command to import the unzipped sql file into the database. Documentation can be found &lt;a href=&#34;https://www.postgresql.org/docs/current/static/backup.html&#34;&gt;here&lt;/a&gt; under the section titled &amp;ldquo;Restoring the dump&amp;rdquo;. The command should look something like &lt;code&gt;psql bonn &amp;lt; bonn_osm.sql&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Create a new database named &lt;code&gt;bonn&lt;/code&gt;, and use a restore command to import the unzipped sql file into the database. Documentation can be found &lt;a href=&#34;https://www.postgresql.org/docs/current/static/backup.html&#34;&gt;here&lt;/a&gt; under the section titled &amp;ldquo;Restoring the dump&amp;rdquo;. The command should look something like &lt;code&gt;psql bonn &amp;lt; bonn_osm.sql&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;To enable Tegola to connect to the database, create a database user named &lt;code&gt;tegola&lt;/code&gt;. Grant superuser privileges to the &lt;code&gt;tegola&lt;/code&gt; user. &lt;em&gt;NOTE: granting superuser privileges is done here to simplify the process of getting started, but may not be desirable in production. Use with caution.&lt;/em&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;3-create-a-configuration-file&#34;&gt;3. Create a configuration file&lt;/h2&gt;
 
@@ -84,7 +86,7 @@ user = &amp;quot;tegola&amp;quot;         # postgis database user
 password = &amp;quot;&amp;quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 
-[[providers.layers]]
+  [[providers.layers]]
   name = &amp;quot;road&amp;quot;
   geometry_fieldname = &amp;quot;wkb_geometry&amp;quot;
   id_fieldname = &amp;quot;ogc_fid&amp;quot;
@@ -121,7 +123,7 @@ name = &amp;quot;zoning&amp;quot;
   max_zoom = 20
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Note: This configuration file is specific to the Bonn data provided in step 2. If you&amp;rsquo;re using another dataset reference the &lt;a href=&#34;http://tegola.io/configuration&#34;&gt;Configuration Documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Note: This configuration file is specific to the Bonn data provided in step 2. If you&amp;rsquo;re using another dataset, reference the &lt;a href=&#34;http://tegola.io/configuration&#34;&gt;Configuration Documentation&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;4-start-tegola&#34;&gt;4. Start Tegola&lt;/h2&gt;
 
@@ -134,16 +136,16 @@ name = &amp;quot;zoning&amp;quot;
 
 &lt;h2 id=&#34;5-create-an-html-page&#34;&gt;5. Create an HTML page&lt;/h2&gt;
 
-&lt;p&gt;Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&amp;rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&amp;rsquo;ll be using the &lt;a href=&#34;http://openlayers.org/&#34;&gt;Open Layers&lt;/a&gt; client side library to display and style the vector tile content.&lt;/p&gt;
+&lt;p&gt;Tegola delivers geospatial vector tile data to any requesting client. For simplicity, we&amp;rsquo;ll be setting up a basic HTML page as our client that will display the rendered map. We&amp;rsquo;ll be using the &lt;a href=&#34;http://openlayers.org/&#34;&gt;OpenLayers&lt;/a&gt; client side library to display and style the vector tile content.&lt;/p&gt;
 
-&lt;p&gt;Create a new HTML file, copy in the contents below, and open in a browser:&lt;/p&gt;
+&lt;p&gt;Create a new directory called &lt;code&gt;static&lt;/code&gt; in the same directory as the Tegola binary. In &lt;code&gt;static&lt;/code&gt;, create a new HTML file called &lt;code&gt;index.html&lt;/code&gt;, copy in the contents below, and open in a browser:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
 &amp;lt;html&amp;gt;
   &amp;lt;head&amp;gt;
     &amp;lt;title&amp;gt;Tegola Sample&amp;lt;/title&amp;gt;
-    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;http://openlayers.org/en/v3.16.0/css/ol.css&amp;quot; type=&amp;quot;text/css&amp;quot;&amp;gt;
-    &amp;lt;script src=&amp;quot;http://openlayers.org/en/v3.16.0/build/ol.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+    &amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;http://openlayers.org/en/v4.3.1/css/ol.css&amp;quot; type=&amp;quot;text/css&amp;quot;&amp;gt;
+    &amp;lt;script src=&amp;quot;http://openlayers.org/en/v4.3.1/build/ol.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
     &amp;lt;style&amp;gt;
       #map {
         width: 100%;
@@ -172,7 +174,7 @@ name = &amp;quot;zoning&amp;quot;
         ],
         target: &#39;map&#39;,
         view: new ol.View({
-          center: [790793.4954921771, 6574927.869849075], //coordinates the map will center on initially
+          center: [790793, 6574927], //coordinates the map will center on initially
           zoom: 14
         })
       });
@@ -181,7 +183,7 @@ name = &amp;quot;zoning&amp;quot;
 &amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;If everything was successful, you should see a map of Bonn in your browser.&lt;/p&gt;
+&lt;p&gt;In your browser, navigate to &lt;a href=&#34;http://localhost:8080&#34;&gt;http://localhost:8080&lt;/a&gt;. If everything was successful, you should see a map:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://tegola.io/images/bonn.png&#34; alt=&#34;Bonn, Germany&#34; /&gt;&lt;/p&gt;
 </description>
