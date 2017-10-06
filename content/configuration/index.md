@@ -6,7 +6,7 @@ weight: 20
 
 ## Overview
 
-The Tegola config file use [TOML](https://github.com/toml-lang/toml) syntax and is comprised of three primary sections:
+The Tegola config file uses [TOML](https://github.com/toml-lang/toml) syntax and is comprised of three primary sections:
 
 - [Webserver](#webserver): webserver configuration.
 - [Providers](#providers): data provider configuration (i.e. PostGIS).
@@ -71,7 +71,7 @@ srid = 3857             # The default srid for this provider. If not provided it
 
 ## Provider Layers
 
-Provider Layers are referenced by [Map Layers](#map-layers) using the dot syntax `provder_name.provider_layer_name` (i.e. `my_postgis.rivers`). Provider Layers are required to have a `name` and will typically have additional parameters which are specific to that Provider. A Provider Layer has the following top level configuration parameters:
+Provider Layers are referenced by [Map Layers](#map-layers) using the dot syntax `provider_name.provider_layer_name` (i.e. `my_postgis.rivers`). Provider Layers are required to have a `name` and will typically have additional parameters which are specific to that Provider. A Provider Layer has the following top level configuration parameters:
 
 | Param              | Required | Description                                       |
 |--------------------|:--------:|--------------------------------------------------:|
@@ -80,7 +80,7 @@ Provider Layers are referenced by [Map Layers](#map-layers) using the dot syntax
 
 ### PostGIS Provider Layer
 
-PostGIS Provider Layers define how Tegola will fetch data for a layer form a [PostGIS](#postgis) Provider. The configuration requires either `tablename` or `sql` to be defined, but not both. The PostGIS Provider Layer has the following configuration prarameters:
+PostGIS Provider Layers define how Tegola will fetch data for a layer from a [PostGIS](#postgis) Provider. The configuration requires either `tablename` or `sql` to be defined, but not both. The PostGIS Provider Layer has the following configuration prarameters:
 
 | Param              | Required |  Default | Description                                                      |
 |--------------------|:--------:|:--------:|-----------------------------------------------------------------:|
@@ -88,7 +88,7 @@ PostGIS Provider Layers define how Tegola will fetch data for a layer form a [Po
 | **sql**            | Yes*     |          | Custom SQL. Requires a !BBOX! token                              |
 | geometry_fieldname | No       | geom     | The name of the geometry field in the table                      |
 | id_fieldname       | No       | gid      | The name of the feature ID field in the table                    |
-| srid               | No       | 3857     | The SRID for the table. Can be 3857 of 4326.                     |
+| srid               | No       | 3857     | The SRID for the table. Can be 3857 or 4326.                     |
 | fields             | No       |          | Fields to include as tag values. Useful when using **tablename** |
 
 
@@ -112,7 +112,7 @@ srid = 4326                         # the srid of table's geo data.
 [[providers.layers]]
 name = "landuse"                    # will be encoded as the layer name in the tile
 # Custom sql to be used for this layer. 
-# Note that the geometery field is wraped in ST_AsBinary()
+# Note that the geometry field is wrapped in ST_AsBinary()
 # as Tegola is expecting Well Known Binary (WKB) format.
 sql = """
 	SELECT
@@ -147,7 +147,7 @@ Map Layers define which [Provider Layers](#provider-layers) to render at what zo
 | Param              | Required | Description                                                                              |
 |--------------------|:--------:|-----------------------------------------------------------------------------------------:|
 | provider_layer     | Yes      | The name of the provider and provider layer using dot syntax. (i.e. my_postgis.rivers).  |
-| min_zoom           | No       | The minium zoom to render this layer at.                                                 |
+| min_zoom           | No       | The minimum zoom to render this layer at.                                                 |
 | max_zoom           | No       | The maximum zoom to render this layer at.                                                |
 
 
@@ -162,7 +162,7 @@ max_zoom = 16                       	# maximum zoom level to include this layer
 
 ## Map Layer Default Tags
 
-Map Layer Default Tags provide a convenient way to encode additional tags that are not supplied by a data provider. If a Defalt Tag is defined and the same tag is returned by the Provider, the Provider defined tage will take precedence. 
+Map Layer Default Tags provide a convenient way to encode additional tags that are not supplied by a data provider. If a Default Tag is defined and the same tag is returned by the Provider, the Provider defined tag will take precedence. 
 
 Default Tags are `key = value` pairs.
 
