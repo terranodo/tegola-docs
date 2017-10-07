@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <title>Tegola - Vector tile server (MVT)</title>
-    <meta name="generator" content="Hugo 0.16-DEV" />
+    <meta name="generator" content="Hugo 0.29" />
 
     
     <meta name="description" content="A MVT vector tile server">
@@ -31,14 +31,14 @@
     <style>
       @font-face {
         font-family: 'Icon';
-        src: url('http://tegola.io/fonts/icon.eot?52m981');
-        src: url('http://tegola.io/fonts/icon.eot?#iefix52m981')
+        src: url('http://tegola.io/fonts/icon.eot');
+        src: url('http://tegola.io/fonts/icon.eot')
                format('embedded-opentype'),
-             url('http://tegola.io/fonts/icon.woff?52m981')
+             url('http://tegola.io/fonts/icon.woff')
                format('woff'),
-             url('http://tegola.io/fonts/icon.ttf?52m981')
+             url('http://tegola.io/fonts/icon.ttf')
                format('truetype'),
-             url('http://tegola.io/fonts/icon.svg?52m981#icon')
+             url('http://tegola.io/fonts/icon.svg')
                format('svg');
         font-weight: normal;
         font-style: normal;
@@ -53,7 +53,7 @@
     
     
     
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu%2bMono">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
     <style>
       body, input {
         font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
@@ -70,10 +70,6 @@
     <link href="http://tegola.io/index.xml" rel="alternate" type="application/rss+xml" title="Tegola - Vector tile server (MVT)" />
     <link href="http://tegola.io/index.xml" rel="feed" type="application/rss+xml" title="Tegola - Vector tile server (MVT)" />
     
-
-    
-    <link rel="stylesheet" href="http://openlayers.org/en/v3.18.1/css/ol.css" type="text/css">
-    <script src="http://openlayers.org/en/v3.18.1/build/ol.js" type="text/javascript"></script>
 
   </head>
   <body class="palette-primary-green palette-accent-light-blue">
@@ -110,7 +106,7 @@
 
     
     <div class="button button-github" role="button" aria-label="GitHub">
-      <a href="https://github.com/terranodo/tegola" title="Tegola - Vector tile server (MVT)" target="_blank" class="toggle-button icon icon-github"></a>
+      <a href="https://github.com/terranodo" title="@terranodo on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
     </div>
     
     
@@ -157,7 +153,7 @@
       
         <ul class="repo">
           <li class="repo-download">
-            <a href="https://github.com/terranodo/tegola/releases" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/terranodo/tegola/archive/master.zip" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
@@ -185,30 +181,11 @@
 
 
 
-<a class="current" title="Welcome" href="http://tegola.io/">
-	
-	Welcome
-</a>
-
-
-<ul id="scrollspy">
-</ul>
-
-  
-</li>
-
-
-
-<li>
-  
-    
-
-
-
 <a  title="Getting started" href="http://tegola.io/getting-started/">
 	
 	Getting started
 </a>
+
 
 
   
@@ -228,6 +205,7 @@
 </a>
 
 
+
   
 </li>
 
@@ -245,6 +223,7 @@
 </a>
 
 
+
   
 </li>
 
@@ -260,6 +239,28 @@
 	
 	Debugging
 </a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a class="current" title="Welcome" href="http://tegola.io/">
+	
+	Welcome
+</a>
+
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -282,6 +283,8 @@
               @terranodo on GitHub
             </a>
           </li>
+          
+
           
         </ul>
         
@@ -336,14 +339,14 @@
   
   
   <div class="next">
-      <a href="http://tegola.io/getting-started/" title="Getting started">
+      <a href="http://tegola.io/tags/" title="Tags">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              Getting started
+              Tags
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">
@@ -395,14 +398,14 @@
             a.setAttribute("href", "#" + headers[i].id);
             a.setAttribute("title", headers[i].innerHTML);
             a.innerHTML = headers[i].innerHTML;
-            
+
             li.appendChild(a)
             scrollspy.appendChild(li);
           }
         } else {
           scrollspy.parentElement.removeChild(scrollspy)
         }
-        
+
 
         /* Add permanent link next to the headers */
         var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -452,7 +455,8 @@
       </script>
     
 
-    <script src="//gohugo.io/js/highlight.pack.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>
+

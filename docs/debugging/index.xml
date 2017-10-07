@@ -7,7 +7,9 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 30 Aug 2016 00:11:02 +0100</lastBuildDate>
-    <atom:link href="http://tegola.io/debugging/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://tegola.io/debugging/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Debugging</title>
@@ -15,40 +17,9 @@
       <pubDate>Tue, 30 Aug 2016 00:11:02 +0100</pubDate>
       
       <guid>http://tegola.io/debugging/</guid>
-      <description>
-
-&lt;h2 id=&#34;environment-variables&#34;&gt;Environment Variables&lt;/h2&gt;
-
-&lt;p&gt;The following environment variables can be used for debugging the tegola server:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;SQL_DEBUG&lt;/code&gt;: specify the type of SQL debug information to output. Supports the following values:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;LAYER_SQL&lt;/code&gt;: print layer SQL as they&amp;rsquo;re parsed from the config file.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;EXECUTE_SQL&lt;/code&gt;: print SQL that is executed for each tile request and the number of items it returns or an error.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;LAYER_SQL:EXECUTE_SQL&lt;/code&gt;: print &lt;code&gt;LAYER_SQL&lt;/code&gt; and &lt;code&gt;EXECUTE_SQL&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;example&#34;&gt;Example&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ SQL_DEBUG=LAYER_SQL tegola --config=/path/to/conf.toml
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;client-side&#34;&gt;Client side&lt;/h2&gt;
-
-&lt;p&gt;When debugging client side, it&amp;rsquo;s often helpful to to see an outline of a tile along with it&amp;rsquo;s Z/X/Y values. To encode a debug layer into every tile add the query string variable debug=true to the URL template being used to request tiles. For example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;http://localhost:8080/maps/mymap/{z}/{x}/{y}.vector.pbf?debug=true
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The requested tile will be encoded with an additional layer with the name value set to debug and include two features:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;debug_outline&lt;/code&gt;: a line feature that traces the border of the tile&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;debug_text&lt;/code&gt;: a point feature in the middle of the tile with the following tags:&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;zxy&lt;/code&gt;: a string with the Z, X and Y values formatted as: Z:0, X:0, Y:0&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>Environment Variables The following environment variables can be used for debugging the tegola server:
+SQL_DEBUG: specify the type of SQL debug information to output. Supports the following values:
+ LAYER_SQL: print layer SQL as they&amp;rsquo;re parsed from the config file. EXECUTE_SQL: print SQL that is executed for each tile request and the number of items it returns or an error. LAYER_SQL:EXECUTE_SQL: print LAYER_SQL and EXECUTE_SQL.  Example $ SQL_DEBUG=LAYER_SQL tegola --config=/path/to/conf.</description>
     </item>
     
   </channel>
