@@ -1,4 +1,4 @@
-baseurl = "http://replace-this-with-your-hugo-site.com/"
+baseurl = "https://example.org/"
 languageCode = "en-us"
 title = "Material Docs"
 theme = "hugo-material-docs"
@@ -32,7 +32,7 @@ googleAnalytics = ""
 
 	[params.palette]
     	primary = "red"
-    	accent  = "light-green"
+    	accent  = "teal"
 
     [params.font]
     	text = "Ubuntu"
@@ -42,6 +42,7 @@ googleAnalytics = ""
 [social]
 	twitter = ""
 	github  = "digitalcraftsman"
+	email   = "hello@email.com"
 
 
 [[menu.main]]
