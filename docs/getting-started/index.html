@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <title>Getting started - Tegola - Vector tile server (MVT)</title>
-    <meta name="generator" content="Hugo 0.29" />
+    <meta name="generator" content="Hugo 0.31.1" />
 
     
     <meta name="description" content="A MVT vector tile server">
@@ -318,9 +318,16 @@
 
 <p>You&rsquo;ll need to load your data provider with data. For your convenience, you can download <a href="https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz">PostGIS data for Bonn, Germany</a>. Unzip this archive to extract the file <code>bonn_osm.sql</code>.</p>
 
-<p>Create a new database named <code>bonn</code>, and use a restore command to import the unzipped sql file into the database. Documentation can be found <a href="https://www.postgresql.org/docs/current/static/backup.html">here</a> under the section titled &ldquo;Restoring the dump&rdquo;. The command should look something like <code>psql bonn &lt; bonn_osm.sql</code>.</p>
+<p>Create a new database named <code>bonn</code>, and use a restore command to import the unzipped sql file into the database. Documentation can be found <a href="https://www.postgresql.org/docs/current/static/backup.html">here</a> under the section titled &ldquo;Restoring the dump&rdquo;. The command should look something like this:</p>
 
-<p>To enable Tegola to connect to the database, create a database user named <code>tegola</code>. Grant superuser privileges to the <code>tegola</code> user. <em>NOTE: granting superuser privileges is done here to simplify the process of getting started, but may not be desirable in production. Use with caution.</em></p>
+<pre><code class="language-sh">psql bonn &lt; bonn_osm.sql
+</code></pre>
+
+<p>To enable the Tegola application to connect to the database, create a database user named <code>tegola</code> and grant the privileges required to read the tables in the <code>public</code> schema of the <code>bonn</code> database, using these commands:</p>
+
+<pre><code class="language-sh">psql -c &quot;CREATE USER tegola;&quot;
+psql -d bonn -c &quot;GRANT SELECT ON ALL TABLES IN SCHEMA public TO tegola;&quot;
+</code></pre>
 
 <h2 id="3-create-a-configuration-file">3. Create a configuration file</h2>
 
