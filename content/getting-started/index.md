@@ -7,9 +7,9 @@ weight: 10
 ## 1. Download Tegola
 Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:
 
-- [OSX](https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_darwin_amd64)
-- [Windows](https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_windows_amd64.exe)
-- [Linux](https://github.com/terranodo/tegola/releases/download/v0.3.2/tegola_linux_amd64)
+- [OSX](https://github.com/terranodo/tegola/releases/download/v0.5.0/tegola_darwin_amd64)
+- [Windows](https://github.com/terranodo/tegola/releases/download/v0.5.0/tegola_windows_amd64.exe)
+- [Linux](https://github.com/terranodo/tegola/releases/download/v0.5.0/tegola_linux_amd64)
 
 Additional binaries for other operating systems and versions are [here](https://github.com/terranodo/tegola/releases).
 

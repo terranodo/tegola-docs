@@ -16,7 +16,7 @@ googleAnalytics = "UA-83708580-1"
 	# Repository
 	provider = "GitHub"
 	repo_url = "https://github.com/terranodo/tegola"
-	version = "0.3.1"
+	version = "0.5.0"
 
 	logo = "images/logo.png"
 	favicon = ""
@@ -66,8 +66,7 @@ googleAnalytics = "UA-83708580-1"
 [[menu.main]]
 	name   = "Debugging"
 	url    = "debugging/"
-	weight = 30	
-
+	weight = 30
 
 [blackfriday]
 	smartypants	= true
