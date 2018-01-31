@@ -21,9 +21,18 @@ Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is
 
 You'll need to load your data provider with data. For your convenience, you can download [PostGIS data for Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz). Unzip this archive to extract the file `bonn_osm.sql`.
 
-Create a new database named `bonn`, and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/current/static/backup.html) under the section titled "Restoring the dump". The command should look something like `psql bonn < bonn_osm.sql`.
+Create a new database named `bonn`, and use a restore command to import the unzipped sql file into the database. Documentation can be found [here](https://www.postgresql.org/docs/current/static/backup.html) under the section titled "Restoring the dump". The command should look something like this:
 
-To enable Tegola to connect to the database, create a database user named `tegola`. Grant superuser privileges to the `tegola` user. *NOTE: granting superuser privileges is done here to simplify the process of getting started, but may not be desirable in production. Use with caution.*
+```sh
+psql bonn < bonn_osm.sql
+```
+
+To enable the Tegola application to connect to the database, create a database user named `tegola` and grant the privileges required to read the tables in the `public` schema of the `bonn` database, using these commands:
+
+```sh
+psql -c "CREATE USER tegola;"
+psql -d bonn -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO tegola;"
+```
 
 ## 3. Create a configuration file
 
