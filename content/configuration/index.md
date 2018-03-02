@@ -73,7 +73,9 @@ srid = 3857             # The default srid for this provider. If not provided it
 
 ### GeoPackage
 
-Load data from a [GeoPackage](http://www.geopackage.org) database.
+Load data from a [GeoPackage](http://www.geopackage.org) database. The GeoPackage provider
+requires that Tegola is built with cgo.
+
 In addition to the required `name` and `type` parameters, a GeoPackage data provider has the following
 additional params:
 
