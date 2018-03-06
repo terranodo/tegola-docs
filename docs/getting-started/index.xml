@@ -17,10 +17,9 @@
       <pubDate>Wed, 09 Mar 2016 00:11:02 +0100</pubDate>
       
       <guid>http://tegola.io/getting-started/</guid>
-      <description>1. Download Tegola Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:
- OSX Windows Linux  Additional binaries for other operating systems and versions are here.
-Find the Tegola file that was downloaded and move it into a fresh directory. Rename this file tegola.
-2. Set up a data provider Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL.</description>
+      <description>1. Download Tegola Choose the binary that matches the operating system Tegola will run on. Find the Tegola file that was downloaded, unzip it, and move it into a fresh directory. Rename this file tegola.
+2. Set up a data provider Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL, and GeoPackage. If you don&amp;rsquo;t have PostGIS installed, download PostGIS.
+You&amp;rsquo;ll need to load your data provider with data.</description>
     </item>
     
   </channel>
