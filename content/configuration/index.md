@@ -17,43 +17,45 @@ The Tegola config file uses [TOML](https://github.com/toml-lang/toml) syntax and
 
 The webserver part of the config has the following parameters:
 
-| Param      | Required |  Default                                                      | Description                                        |
-|------------|:--------:|:-------------------------------------------------------------:|---------------------------------------------------:|
-| port       | No       | :8080                                                         | A string with the value for port.                  |
-| log_file   | No       |                                                               | Location of a log file to write webserver logs to. |
-| log_format | No       | {{.Time}}:{{.RequestIP}} —— Tile:{{.Z}}/{{.X}}/{{.Y}}         | Log output format. The Default format can be rearranged as desired. |
+| Param                 | Required |  Default                    | Description                                        |
+|-----------------------|:--------:|:---------------------------:|---------------------------------------------------:|
+| port                  | No       | :8080                       | A string with the value for port.                  |
+| hostname              | No       | HTTP Hostname in request    | Override the hostname used to generate URLs.       |
+| cors_allowed_origin   | No       | *                           | Allowed [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) origin. |
 
 #### Example Webserver config
 
 ```toml
 [webserver]
 port = ":8080"
-log_file = "/var/log/tegola/tegola.log"
-log_format = "{{.Time}}:{{.RequestIP}} —— Tile:{{.Z}}/{{.X}}/{{.Y}}"
+hostname = "tiles.example.com"
+cors_allowed_origin = "map.example.com"
 ```
 
 ## Providers
 
-The providers configuration tells Tegola where your data lives. Currently Tegola supports PostGIS as a data provider, but it's positioned to support additional data providers. Data providers each have their own specific configuration, but all are required to have the following two config params:
+The providers configuration tells Tegola where your data lives. Tegola supports PostGIS and GeoPackage data providers. Providers
+are required to have the following two config parameters:
 
 | Param    | Description                                                                                |
 |----------|-------------------------------------------------------------------------------------------:|
 | name     | User defined data provider name. This is used by map layers to reference the data provider.|
-| type     | The type of data provider. (i.e. "postgis")                                                |
+| type     | The type of data provider (`postgis` or `gpkg`).                                           |
 
 
 ### PostGIS
 
-In addition to the required `name` and `type` parameters, a PostGIS data provider has the following additional params:
+Load data from a Postgres/PostGIS database. In addition to the required `name` and `type` parameters,
+a PostGIS data provider has the following additional params:
 
 | Param    | Required |  Default | Description                                     |
 |----------|:--------:|:--------:|------------------------------------------------:|
 | host     | Yes      |          | The database host.                              |
 | port     | No       | 5432     | The port the database is listening on.          |
-| database | Yes      |          | The name of the database                        |
-| user     | Yes      |          | The database user                               |
-| password | Yes      |          | The database user's password                    |
-| srid     | No       | 3857     | The default SRID for this data provider         |
+| database | Yes      |          | The name of the database.                       |
+| user     | Yes      |          | The database user.                              |
+| password | Yes      |          | The database user's password.                   |
+| srid     | No       | 3857     | The default SRID for this data provider.        |
 
 #### Example PostGIS Provider config
 
@@ -67,6 +69,27 @@ database = "tegola"     # postgis database name
 user = "tegola"         # postgis database user
 password = ""           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
+```
+
+### GeoPackage
+
+Load data from a [GeoPackage](http://www.geopackage.org) database. The GeoPackage provider
+requires that Tegola is built with cgo.
+
+In addition to the required `name` and `type` parameters, a GeoPackage data provider has the following
+additional params:
+
+| Param    | Required |  Default | Description                                                         |
+|----------|:--------:|:--------:|--------------------------------------------------------------------:|
+| filepath | Yes      |          | The system file path to the GeoPackage you wish to connect to.      |
+
+#### Example GeoPackage Provider config
+
+```toml
+[[providers]]
+name = "sample_gpkg"
+type = "gpkg"
+filepath = "/path/to/my/sample_gpkg.gpkg"
 ```
 
 ## Provider Layers
@@ -85,11 +108,11 @@ PostGIS Provider Layers define how Tegola will fetch data for a layer from a [Po
 | Param              | Required |  Default | Description                                                      |
 |--------------------|:--------:|:--------:|-----------------------------------------------------------------:|
 | **tablename**      | Yes*     |          | The name of the database table to query.                         |
-| **sql**            | Yes*     |          | Custom SQL. Requires a !BBOX! token                              |
+| **sql**            | Yes*     |          | Custom SQL. Requires a `!BBOX!` token.                           |
 | geometry_fieldname | No       | geom     | The name of the geometry field in the table                      |
 | id_fieldname       | No       | gid      | The name of the feature ID field in the table                    |
 | srid               | No       | 3857     | The SRID for the table. Can be 3857 or 4326.                     |
-| fields             | No       |          | Fields to include as tag values. Useful when using **tablename** |
+| fields             | No       |          | Fields to include as tag values when using **tablename**.        |
 
 
 &#42; Either `tablename` or `sql` is required, but not both.
@@ -125,19 +148,58 @@ sql = """
 """
 ```
 
+### GeoPackage Provider Layer
+
+| Param              | Required |  Default | Description                                                                        |
+|--------------------|:--------:|:--------:|-----------------------------------------------------------------------------------:|
+| **tablename**      | Yes*     |          | The name of the database table to query against.                                   |
+| **sql**            | Yes*     |          | Custom SQL to use. Requires a `!BBOX!` token.                                      |
+| id_fieldname       | No       | `fid`    | The name of the feature id field.                                                  |
+| fields             | No       |          | A list of fields (column names) to include as feature tags when using **tablename**.|
+
+&#42; Either `tablename` or `sql` is required, but not both.
+
+When using the **sql** param with GeoPackage:
+
+- You must join your feature table to the spatial index table: i.e. `JOIN feature_table ft rtree_feature_table_geom si ON ft.fid = rt.si`
+- Include the following fields in your SELECT clause: `si.minx, si.miny, si.maxx, si.maxy`
+- Note that the id field for your feature table may be something other than `fid`
+
+#### Example GeoPackage Provider Layer with `sql`
+
+```toml
+[[providers.layers]]
+name = "a_points"
+sql = """
+    SELECT 
+        fid, geom, amenity, religion, tourism, shop, si.minx, si.miny, si.maxx, si.maxy
+    FROM 
+        land_polygons lp
+    JOIN 
+        rtree_land_polygons_geom si ON lp.fid = si.id
+    WHERE 
+        !BBOX!
+"""
+```
+
 ## Maps
 
 Tegola is responsible for serving vector map tiles, which are made up of numerous [Map Layers](#map-layers). The name of the Map is used in the URL of all map tile requests (i.e. [/maps/:map_name/:z/:x/:y](/endpoints/#maps-map-z-x-y)). Maps have the following configuration parameters:
 
 
-| Param              | Required | Description                                                      |
-|--------------------|:--------:|-----------------------------------------------------------------:|
-| name               | Yes      | The map that will be referenced in the URL (i.e. /maps/:map_name.|
+| Param              | Required | Description                                                               |
+|--------------------|:--------:|--------------------------------------------------------------------------:|
+| name               | Yes      | The map that will be referenced in the URL (i.e. `/maps/:map_name`).      |
+| attribution        | No       | Attribution string to be included in the TileJSON.                        |
+| bounds             | No       | A list of map bounds.                                                     |
+| center             | No       | The center of the map to be displayed in the preview. (`[lon, lat, zoom]`)|
 
 
 ```toml
 [[maps]]
 name = "zoning"		# used in the URL to reference this map (/maps/:map_name)
+attribution = "Natural Earth v4"
+center = [-76.275329586789, 39.153492567373, 5.0]
 ```
 
 ## Map Layers
@@ -146,9 +208,11 @@ Map Layers define which [Provider Layers](#provider-layers) to render at what zo
 
 | Param              | Required | Description                                                                              |
 |--------------------|:--------:|-----------------------------------------------------------------------------------------:|
-| provider_layer     | Yes      | The name of the provider and provider layer using dot syntax. (i.e. my_postgis.rivers).  |
-| min_zoom           | No       | The minimum zoom to render this layer at.                                                 |
+| provider_layer     | Yes      | The name of the provider and provider layer using dot syntax. (i.e. `my_postgis.rivers`).|
+| min_zoom           | No       | The minimum zoom to render this layer at.                                                |
 | max_zoom           | No       | The maximum zoom to render this layer at.                                                |
+| default_tags       | No       | Default tags to be added to features on this layer.                                      |
+| dont_simplify      | No       | Boolean to prevent feature simplification from being applied.                            |
 
 
 #### Example Map Layer
