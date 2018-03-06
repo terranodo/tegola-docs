@@ -5,19 +5,13 @@ weight: 10
 ---
 
 ## 1. Download Tegola
-Choose the binary that matches the operating system Tegola will run on. Quick links are available below for your convenience:
-
-- [OSX](https://github.com/terranodo/tegola/releases/download/v0.5.0/tegola_darwin_amd64)
-- [Windows](https://github.com/terranodo/tegola/releases/download/v0.5.0/tegola_windows_amd64.exe)
-- [Linux](https://github.com/terranodo/tegola/releases/download/v0.5.0/tegola_linux_amd64)
-
-Additional binaries for other operating systems and versions are [here](https://github.com/terranodo/tegola/releases).
-
-Find the Tegola file that was downloaded and move it into a fresh directory. Rename this file `tegola`.
+[Choose the binary](https://github.com/go-spatial/tegola/releases) that matches the operating system Tegola will run on.
+Find the Tegola file that was downloaded, unzip it, and move it into a fresh directory. Rename this file `tegola`.
 
 ## 2. Set up a data provider
 
-Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL. If you don't have PostGIS installed, [download PostGIS](http://postgis.net/install/).
+Tegola needs geospatial data to run. Currently, Tegola supports PostGIS which is a geospatial extension for PostgreSQL, and GeoPackage.
+If you don't have PostGIS installed, [download PostGIS](http://postgis.net/install/).
 
 You'll need to load your data provider with data. For your convenience, you can download [PostGIS data for Bonn, Germany](https://s3-us-west-2.amazonaws.com/tegola/bonn_osm.sql.tgz). Unzip this archive to extract the file `bonn_osm.sql`.
 
