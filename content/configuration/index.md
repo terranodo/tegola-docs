@@ -206,13 +206,14 @@ center = [-76.275329586789, 39.153492567373, 5.0]
 
 Map Layers define which [Provider Layers](#provider-layers) to render at what zoom levels. Map Layers have the following configuration parameters:
 
-| Param              | Required | Description                                                                              |
-|--------------------|:--------:|-----------------------------------------------------------------------------------------:|
-| provider_layer     | Yes      | The name of the provider and provider layer using dot syntax. (i.e. `my_postgis.rivers`).|
-| min_zoom           | No       | The minimum zoom to render this layer at.                                                |
-| max_zoom           | No       | The maximum zoom to render this layer at.                                                |
-| default_tags       | No       | Default tags to be added to features on this layer.                                      |
-| dont_simplify      | No       | Boolean to prevent feature simplification from being applied.                            |
+| Param              | Required | Description                                                                                     |
+|--------------------|:--------:|------------------------------------------------------------------------------------------------:|
+| provider_layer     | Yes      | The name of the provider and provider layer using dot syntax. (i.e. `my_postgis.rivers`).       |
+| name               | No       | Defaults to the provider layer name unless specified. Map layers with the same name are grouped and can't have overlapping zooms.|
+| min_zoom           | No       | The minimum zoom to render this layer at.                                                       |
+| max_zoom           | No       | The maximum zoom to render this layer at.                                                       |
+| default_tags       | No       | Default tags to be added to features on this layer.                                             |
+| dont_simplify      | No       | Boolean to prevent feature simplification from being applied.                                   |
 
 
 #### Example Map Layer
