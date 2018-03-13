@@ -30,7 +30,7 @@ You&amp;rsquo;ll need to load your data provider with data.</description>
       <guid>http://tegola.io/configuration/</guid>
       <description>Overview The Tegola config file uses TOML syntax and is comprised of three primary sections:
  Webserver: webserver configuration. Providers: data provider configuration (i.e. PostGIS). Maps: map configuration including map names, layers and zoom levels.  Webserver The webserver part of the config has the following parameters:
-   Param Required Default Description     port No :8080 A string with the value for port.   log_file No  Location of a log file to write webserver logs to.</description>
+   Param Required Default Description     port No :8080 A string with the value for port.   hostname No HTTP Hostname in request Override the hostname used to generate URLs.</description>
     </item>
     
     <item>

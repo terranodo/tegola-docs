@@ -34,8 +34,7 @@ cors_allowed_origin = "map.example.com"
 
 ## Cache
 
-This section configures caches for generated tiles. The cache section always requires the
-following parameters:
+This section configures caches for generated tiles. All cache configs have the following parameters:
 
 | Param    | Required | Description                                                  |
 |----------|:--------:|-------------------------------------------------------------:|
