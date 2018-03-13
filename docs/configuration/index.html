@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <title>Configuration - Tegola - Vector tile server (MVT)</title>
-    <meta name="generator" content="Hugo 0.30.2" />
+    <meta name="generator" content="Hugo 0.29" />
 
     
     <meta name="description" content="A MVT vector tile server">
@@ -354,6 +354,166 @@ hostname = &quot;tiles.example.com&quot;
 cors_allowed_origin = &quot;map.example.com&quot;
 </code></pre>
 
+<h2 id="cache">Cache</h2>
+
+<p>This section configures caches for generated tiles. All cache configs have the following parameters:</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>type</td>
+<td align="center">Yes</td>
+<td align="right">The type of cache to use (<code>file</code>, <code>redis</code>, or <code>s3</code>)</td>
+</tr>
+
+<tr>
+<td>max_zoom</td>
+<td align="center">No</td>
+<td align="right">The max zoom which should be cached.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="file">File</h3>
+
+<p>Cache tiles in a directory on the local filesystem.</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>basepath</td>
+<td align="center">Yes</td>
+<td align="right">A directory on the file system to write the cached tiles to.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="redis">Redis</h3>
+
+<p>Cache tiles in <a href="https://redis.io/">Redis</a>.</p>
+
+<p>When no parameters are supplied, this cache will try and connect to a local Redis
+instance with default configuration.</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="center">Default</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>network</td>
+<td align="center">No</td>
+<td align="center"><code>tcp</code></td>
+<td align="right">The type of connection (<code>tcp</code> or <code>unix</code>)</td>
+</tr>
+
+<tr>
+<td>address</td>
+<td align="center">No</td>
+<td align="center">127.0.0.1:6379</td>
+<td align="right">The address of Redis in the form <code>ip:port</code>.</td>
+</tr>
+
+<tr>
+<td>password</td>
+<td align="center">No</td>
+<td align="center"></td>
+<td align="right">Password to use when connecting.</td>
+</tr>
+
+<tr>
+<td>db</td>
+<td align="center">No</td>
+<td align="center"></td>
+<td align="right">Database to use (int).</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="s3">S3</h3>
+
+<p>Cache tiles in Amazon S3.</p>
+
+<table>
+<thead>
+<tr>
+<th>Param</th>
+<th align="center">Required</th>
+<th align="center">Default</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>bucket</td>
+<td align="center">Yes</td>
+<td align="center"></td>
+<td align="right">The name of the S3 bucket to use.</td>
+</tr>
+
+<tr>
+<td>basepath</td>
+<td align="center">No</td>
+<td align="center"></td>
+<td align="right">A path prefix added to all cache operations inside of the S3 bucket</td>
+</tr>
+
+<tr>
+<td>region</td>
+<td align="center">No</td>
+<td align="center">us-east-1</td>
+<td align="right">The region the bucket is in.</td>
+</tr>
+
+<tr>
+<td>aws_access_key_id</td>
+<td align="center">No</td>
+<td align="center"></td>
+<td align="right">The AWS access key id to use.</td>
+</tr>
+
+<tr>
+<td>aws_secret_access_key</td>
+<td align="center">No</td>
+<td align="center"></td>
+<td align="right">The AWS secret access key to use.</td>
+</tr>
+</tbody>
+</table>
+
+<p>If the <code>aws_access_key_id</code> and <code>aws_secret_access_key</code> are not set, then the
+<a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html">credential provider chain</a>
+will be used. The provider chain supports multiple methods for passing credentials, one of which is
+through environment variables. For example:</p>
+
+<pre><code class="language-bash">$ export AWS_REGION=us-west-2
+$ export AWS_ACCESS_KEY_ID=YOUR_AKID
+$ export AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
+</code></pre>
+
 <h2 id="providers">Providers</h2>
 
 <p>The providers configuration tells Tegola where your data lives. Tegola supports PostGIS and GeoPackage data providers. Providers
@@ -590,13 +750,13 @@ name = &quot;landuse&quot;                    # will be encoded as the layer nam
 # Note that the geometry field is wrapped in ST_AsBinary()
 # as Tegola is expecting Well Known Binary (WKB) format.
 sql = &quot;&quot;&quot;
-    SELECT
-        gid,
-        ST_AsBinary(geom) AS geom
-    FROM
-        gis.rivers
-    WHERE
-        geom &amp;&amp; !BBOX!
+	SELECT
+		gid,
+		ST_AsBinary(geom) AS geom
+	FROM
+		gis.rivers
+	WHERE
+		geom &amp;&amp; !BBOX!
 &quot;&quot;&quot;
 </code></pre>
 
@@ -710,7 +870,7 @@ sql = &quot;&quot;&quot;
 </table>
 
 <pre><code class="language-toml">[[maps]]
-name = &quot;zoning&quot;     # used in the URL to reference this map (/maps/:map_name)
+name = &quot;zoning&quot;		# used in the URL to reference this map (/maps/:map_name)
 attribution = &quot;Natural Earth v4&quot;
 center = [-76.275329586789, 39.153492567373, 5.0]
 </code></pre>
@@ -771,8 +931,8 @@ center = [-76.275329586789, 39.153492567373, 5.0]
 
 <pre><code class="language-toml">[[maps.layers]]
 provider_layer = &quot;test_postgis.landuse&quot; # must match a data provider layer
-min_zoom = 12                           # minimum zoom level to include this layer
-max_zoom = 16                           # maximum zoom level to include this layer
+min_zoom = 12                       	# minimum zoom level to include this layer
+max_zoom = 16                       	# maximum zoom level to include this layer
 </code></pre>
 
 <h2 id="map-layer-default-tags">Map Layer Default Tags</h2>
@@ -784,7 +944,7 @@ max_zoom = 16                           # maximum zoom level to include this lay
 <h4 id="example-map-layer-default-tags">Example Map Layer Default Tags</h4>
 
 <pre><code class="language-toml">[maps.layers.default_tags]      
-class = &quot;park&quot;          # a default tag to encode into the feature
+class = &quot;park&quot;			# a default tag to encode into the feature
 </code></pre>
 
 <h2 id="full-config-example">Full Config Example</h2>
@@ -793,6 +953,10 @@ class = &quot;park&quot;          # a default tag to encode into the feature
 
 <pre><code class="language-toml">[webserver]
 port = &quot;:9090&quot;
+
+[cache]
+type = &quot;file&quot;
+basepath = &quot;/tmp/tegola-cache&quot;
 
 # register data providers
 [[providers]]
@@ -805,20 +969,20 @@ user = &quot;tegola&quot;         # postgis database user
 password = &quot;&quot;           # postgis database password
 srid = 3857             # The default srid for this provider. If not provided it will be WebMercator (3857)
 
-    # Example data
+	# Example data
     [[providers.layers]]
-    name = &quot;landuse&quot;                    # will be encoded as the layer name in the tile
-    tablename = &quot;gis.zoning_base_3857&quot;  # sql or table_name are required
-    geometry_fieldname = &quot;geom&quot;         # geom field. default is geom
-    id_fieldname = &quot;gid&quot;                # geom id field. default is gid
-    srid = 4326                         # the SRID of the geometry field if different than 
+    name = &quot;landuse&quot;					# will be encoded as the layer name in the tile
+    tablename = &quot;gis.zoning_base_3857&quot;	# sql or table_name are required
+    geometry_fieldname = &quot;geom&quot;			# geom field. default is geom
+    id_fieldname = &quot;gid&quot;				# geom id field. default is gid
+    srid = 4326							# the SRID of the geometry field if different than 
 
     [[providers.layers]]
-    name = &quot;roads&quot;                      # will be encoded as the layer name in the tile
-    tablename = &quot;gis.zoning_base_3857&quot;  # sql or table_name are required
-    geometry_fieldname = &quot;geom&quot;         # geom field. default is geom
-    id_fieldname = &quot;gid&quot;                # geom id field. default is gid
-    fields = [ &quot;class&quot;, &quot;name&quot; ]        # Additional fields to include in the select statement.
+    name = &quot;roads&quot;						# will be encoded as the layer name in the tile
+    tablename = &quot;gis.zoning_base_3857&quot;	# sql or table_name are required
+    geometry_fieldname = &quot;geom&quot;			# geom field. default is geom
+    id_fieldname = &quot;gid&quot;				# geom id field. default is gid
+    fields = [ &quot;class&quot;, &quot;name&quot; ]		# Additional fields to include in the select statement.
 
     [[providers.layers]]
     name = &quot;rivers&quot;                     # will be encoded as the layer name in the tile
@@ -836,20 +1000,20 @@ srid = 3857             # The default srid for this provider. If not provided it
 
 # maps are made up of layers
 [[maps]]
-name = &quot;zoning&quot;                             # used in the URL to reference this map (/maps/:map_name)
+name = &quot;zoning&quot;                         	# used in the URL to reference this map (/maps/:map_name)
 
     [[maps.layers]]
     provider_layer = &quot;test_postgis.landuse&quot; # must match a data provider layer
-    min_zoom = 12                           # minimum zoom level to include this layer
-    max_zoom = 16                           # maximum zoom level to include this layer
+    min_zoom = 12                       	# minimum zoom level to include this layer
+    max_zoom = 16                       	# maximum zoom level to include this layer
 
-        [maps.layers.default_tags]          # table of default tags to encode in the tile. SQL statements will override
+        [maps.layers.default_tags]      	# table of default tags to encode in the tile. SQL statements will override
         class = &quot;park&quot;
 
     [[maps.layers]]
     provider_layer = &quot;test_postgis.rivers&quot;  # must match a data provider layer
-    min_zoom = 10                           # minimum zoom level to include this layer
-    max_zoom = 18                           # maximum zoom level to include this layer
+    min_zoom = 10                       	# minimum zoom level to include this layer
+    max_zoom = 18                       	# maximum zoom level to include this layer
 </code></pre>
 
 
