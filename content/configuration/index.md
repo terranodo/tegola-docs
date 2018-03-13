@@ -32,6 +32,61 @@ hostname = "tiles.example.com"
 cors_allowed_origin = "map.example.com"
 ```
 
+## Cache
+
+This section configures caches for generated tiles. The cache section always requires the
+following parameters:
+
+| Param    | Required | Description                                                  |
+|----------|:--------:|-------------------------------------------------------------:|
+| type     | Yes      | The type of cache to use (`file`, `redis`, or `s3`)          |
+| max_zoom | No       | The max zoom which should be cached.                         |
+
+### File
+
+Cache tiles in a directory on the local filesystem.
+
+| Param    | Required | Description                                                  |
+|----------|:--------:|-------------------------------------------------------------:|
+| basepath | Yes      | A directory on the file system to write the cached tiles to. |
+
+### Redis
+
+Cache tiles in [Redis](https://redis.io/).
+
+When no parameters are supplied, this cache will try and connect to a local Redis
+instance with default configuration.
+
+| Param    | Required | Default        | Description                                                  |
+|----------|:--------:|:--------------:|-------------------------------------------------------------:|
+| network  | No       | `tcp`          | The type of connection (`tcp` or `unix`)                     |
+| address  | No       | 127.0.0.1:6379 | The address of Redis in the form `ip:port`.                  |
+| password | No       |                | Password to use when connecting.                             |
+| db       | No       |                | Database to use (int).                                       |
+
+### S3
+
+Cache tiles in Amazon S3.
+
+| Param    | Required | Default        | Description                                                  |
+|----------|:--------:|:--------------:|-------------------------------------------------------------:|
+| bucket   | Yes      |                | The name of the S3 bucket to use.                            |
+| basepath | No       |                | A path prefix added to all cache operations inside of the S3 bucket |
+| region   | No       | us-east-1      | The region the bucket is in.                                 |
+| aws_access_key_id | No |             | The AWS access key id to use.                                |
+| aws_secret_access_key | No |         | The AWS secret access key to use.                            |
+
+If the `aws_access_key_id` and `aws_secret_access_key` are not set, then the
+[credential provider chain](https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html)
+will be used. The provider chain supports multiple methods for passing credentials, one of which is
+through environment variables. For example:
+
+```bash
+$ export AWS_REGION=us-west-2
+$ export AWS_ACCESS_KEY_ID=YOUR_AKID
+$ export AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
+```
+
 ## Providers
 
 The providers configuration tells Tegola where your data lives. Tegola supports PostGIS and GeoPackage data providers. Providers
@@ -244,6 +299,10 @@ The following config demonstrates the various concepts discussed above:
 ```toml
 [webserver]
 port = ":9090"
+
+[cache]
+type = "file"
+basepath = "/tmp/tegola-cache"
 
 # register data providers
 [[providers]]
